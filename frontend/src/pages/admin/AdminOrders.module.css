@@ -1,0 +1,268 @@
+.page { max-width: 1200px; }
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pageHeader h1 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--color-espresso);
+  margin-bottom: 0.2rem;
+}
+
+.pageHeader p { color: var(--color-muted); font-size: 0.875rem; }
+
+.filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* List */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.orderCard {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.orderCard:hover {
+  border-color: rgba(200,149,108,0.3);
+  box-shadow: var(--shadow-md);
+}
+
+.orderCard.selected {
+  border-color: var(--color-espresso);
+  background: var(--color-foam);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.orderNum {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--color-espresso);
+}
+
+.cardMeta {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  font-size: 0.775rem;
+  color: var(--color-muted);
+  margin-bottom: 0.4rem;
+}
+
+.cardBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardTime {
+  font-size: 0.72rem;
+  color: #bbb;
+}
+
+.cardTotal {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-espresso);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+/* Detail panel */
+.detail {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(200,149,108,0.15);
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.detailContent {
+  padding: 1.5rem;
+}
+
+.detailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.detailHeader h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--color-espresso);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+
+.closeBtn:hover {
+  background: #FEE2E2;
+  color: var(--color-error);
+}
+
+.detailMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  background: var(--color-foam);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+}
+
+.metaRow {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  align-items: flex-start;
+}
+
+.metaRow span:first-child {
+  color: var(--color-muted);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.metaRow a {
+  color: var(--color-latte);
+  text-decoration: none;
+}
+
+.itemsTitle, .actionsTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--color-espresso);
+  margin-bottom: 0.6rem;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.itemRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+}
+
+.itemQty {
+  font-weight: 700;
+  color: var(--color-latte);
+  min-width: 26px;
+}
+
+.itemInfo {
+  flex: 1;
+}
+
+.itemInfo p {
+  color: var(--color-charcoal);
+  font-weight: 500;
+}
+
+.itemInfo small {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.itemPrice {
+  font-weight: 600;
+  color: var(--color-espresso);
+  white-space: nowrap;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-top: 2px solid var(--color-cream);
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  color: var(--color-espresso);
+}
+
+.totalRow strong {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.statusBtns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .list {
+    max-height: 50vh;
+  }
+
+  .detail {
+    position: static;
+    max-height: none;
+  }
+}

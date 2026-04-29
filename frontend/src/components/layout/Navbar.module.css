@@ -1,0 +1,130 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(254, 252, 248, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200, 149, 108, 0.2);
+  height: var(--nav-height);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.logoIcon {
+  font-size: 1.5rem;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-espresso);
+  letter-spacing: -0.02em;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.link {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--color-espresso);
+  background: var(--color-cream);
+}
+
+.link.active {
+  color: var(--color-espresso);
+  background: var(--color-cream);
+  font-weight: 600;
+}
+
+.cartBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--color-espresso);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.cartBtn:hover {
+  background: var(--color-coffee);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.cartIcon {
+  font-size: 1.1rem;
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--color-gold);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 2px solid var(--color-warm-white);
+}
+
+@media (max-width: 600px) {
+  .links {
+    display: none;
+  }
+
+  .logoText {
+    display: none;
+  }
+
+  .cartBtn span:not(.badge) {
+    display: none;
+  }
+
+  .cartBtn {
+    padding: 0.6rem;
+  }
+
+  .cartIcon {
+    font-size: 1.3rem;
+  }
+}
