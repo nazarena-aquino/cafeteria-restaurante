@@ -25,13 +25,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('No permitido por CORS'));
-    }
-  },
+  origin: true, // permite cualquier origen en producción
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -40,13 +34,13 @@ app.use(cors({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 200,
+  max: 500,
   message: { success: false, error: 'Demasiadas solicitudes, intenta más tarde' },
 });
 
 const orderLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minuto
-  max: 10,
+  max: 60,             // suficiente para desarrollo y uso normal
   message: { success: false, error: 'Demasiados pedidos, espera un momento' },
 });
 
