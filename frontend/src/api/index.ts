@@ -35,6 +35,13 @@ api.interceptors.response.use(
 // ========================
 
 export const productApi = {
+  uploadImage: (file: File) => {
+    const formData = new FormData()
+    formData.append('image', file)
+    return api.post('/products/admin/upload-image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+  },
   getAll: () => api.get('/products'),
   getById: (id: string) => api.get(`/products/${id}`),
   getCategories: () => api.get('/products/categories/public'),

@@ -1,130 +1,140 @@
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
   z-index: 100;
-  background: rgba(254, 252, 248, 0.95);
+
+  background: #2E5363;
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(200, 149, 108, 0.2);
-  height: var(--nav-height);
+
+  border-bottom: 1px solid rgba(217, 185, 110, 0.2);
 }
 
 .inner {
-  max-width: var(--max-width);
+  max-width: var(--max-width, 1200px);
   margin: 0 auto;
-  padding: 0 1.5rem;
-  height: 100%;
+  padding: 0 2rem;
+  height: var(--nav-height, 80px);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
-}
-
-.logoIcon {
-  font-size: 1.5rem;
-}
-
+/* NUEVO LOGO TEXTO */
 .logoText {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-espresso);
-  letter-spacing: -0.02em;
+  color: #F5F0E6; 
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
 }
 
+.logoText:hover {
+  color: #D9B96E;
+}
+
+/* LINKS */
 .links {
   display: flex;
-  align-items: center;
-  gap: 0.25rem;
+  gap: 1.5rem;
 }
 
 .link {
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: var(--color-muted);
-  transition: all var(--transition);
+  font-family: var(--font-display, 'Be Vietnam Pro', sans-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  color: rgba(245, 245, 220, 0.7);
   text-decoration: none;
+
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+
+  transition: all var(--transition, 0.3s ease);
 }
 
 .link:hover {
-  color: var(--color-espresso);
-  background: var(--color-cream);
+  color: #D9B96E;
 }
 
-.link.active {
-  color: var(--color-espresso);
-  background: var(--color-cream);
+/* ACTIVO */
+.active {
+  background: rgba(217, 185, 110, 0.15);
+  color: #D9B96E;
   font-weight: 600;
 }
 
+/* CART */
 .cartBtn {
+  position: relative; /* CRUCIAL para que la burbuja se ubique bien */
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
   padding: 0.6rem 1.2rem;
-  background: var(--color-espresso);
-  color: white;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  font-size: 0.95rem;
+
+  background: rgba(255, 255, 255, 0.05);
+  color: #F5F5DC;
+
+  border: 1px solid rgba(217, 185, 110, 0.2);
+  border-radius: var(--radius-sm, 6px);
+
   text-decoration: none;
-  transition: all var(--transition);
-  position: relative;
+  font-size: 0.85rem;
+  font-family: var(--font-display, 'Be Vietnam Pro', sans-serif);
+
+  transition: all var(--transition, 0.3s ease);
 }
 
 .cartBtn:hover {
-  background: var(--color-coffee);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: #D9B96E;
+  color: #2E5363;
 }
 
 .cartIcon {
   font-size: 1.1rem;
 }
 
+/* BADGE MEJORADO */
 .badge {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: var(--color-gold);
-  color: white;
-  width: 22px;
+
+  min-width: 22px; 
   height: 22px;
-  border-radius: 50%;
+  padding: 0 4px; 
+
+  background: #D9B96E;
+  color: #2E5363;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1; /* Esto centra el texto a la perfección */
+
+  border-radius: 50px;
+  border: 2px solid #2E5363; /* Crea un borde que se camufla con el nav */
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border: 2px solid var(--color-warm-white);
 }
 
-@media (max-width: 600px) {
+/* RESPONSIVE */
+@media (max-width: 768px) {
   .links {
     display: none;
   }
 
-  .logoText {
-    display: none;
-  }
-
-  .cartBtn span:not(.badge) {
-    display: none;
+  .cartText {
+    display: none; /* Oculta la palabra "Carrito" pero deja el ícono y el número */
   }
 
   .cartBtn {
     padding: 0.6rem;
-  }
-
-  .cartIcon {
-    font-size: 1.3rem;
   }
 }

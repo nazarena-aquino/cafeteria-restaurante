@@ -1,346 +1,679 @@
-.hero {
-  background: linear-gradient(135deg, var(--color-espresso) 0%, var(--color-coffee) 60%, #6B3F3A 100%);
-  color: white;
-  padding: 5rem 1.5rem;
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
+/* =============================================
+   VORA - HomePage Styles
+   Design System Colors:
+   - Background Dark: #131313
+   - Primary Container (Forest Green): #1B3022
+   - Gold/Tertiary: #D4AF37
+   - Cream/Beige: #F5F5DC
+   - Surface: #2a2a2a
+   ============================================= */
+
+   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap');
+
+   /* ============= PAGE BASE ============= */
+   .page {
+    background-color: #131313;
+    color: #F5F0E6;
+    min-height: 100vh;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    padding-top: 0;
+  }
+   
+   /* ============= HERO ============= */
+   .hero {
+    position: relative;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+   
+   .heroBackground {
+     position: absolute;
+     inset: 0;
+     z-index: 0;
+   }
+   
+   .heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 70%;
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+   
+  .heroOverlay {
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(to bottom, rgba(19, 19, 19, 0.3) 0%, transparent 40%),
+      linear-gradient(to top, rgba(245, 230, 179, 0.85) 0%, rgba(245, 230, 179, 0.2) 10%, transparent 35%);
+  }
+   
+   .heroContent {
+     position: relative;
+     z-index: 10;
+     text-align: center;
+     padding: 0 1.5rem;
+     max-width: 800px;
+   }
+   
+   .heroLabel {
+     display: block;
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 0.75rem;
+     font-weight: 600;
+     letter-spacing: 0.2em;
+     text-transform: uppercase;
+     color: #D9B96E;
+     margin-bottom: 1.5rem;
+   }
+   
+   .heroTitle {
+     font-family: 'Noto Serif', serif;
+     font-size: clamp(2rem, 6vw, 3rem);
+     font-weight: 700;
+     line-height: 1.1;
+     letter-spacing: -0.02em;
+     color: #F5F0E6;
+     margin-bottom: 1.5rem;
+   }
+   
+   .heroDescription {
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 1.125rem;
+     line-height: 1.6;
+     color: #CFC8BC;
+     margin-bottom: 2.5rem;
+     max-width: 600px;
+     margin-left: auto;
+     margin-right: auto;
+   }
+   
+   .heroButtons {
+     display: flex;
+     flex-direction: row;
+     gap: 1.5rem;
+     justify-content: center;
+     align-items: center;
+   }
+   
+   .primaryButton {
+     display: inline-block;
+     background-color: #2E5363;
+     border: 1.5px solid #D9B96E;
+     color: #F5F0E6;
+     padding: 1rem 2.5rem;
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 0.75rem;
+     font-weight: 600;
+     letter-spacing: 0.1em;
+     text-transform: uppercase;
+     text-decoration: none;
+     cursor: pointer;
+     transition: all 0.3s ease;
+   }
+   
+   .primaryButton:hover {
+     background-color: #D9B96E;
+     color: #2E5363;
+   }
+   
+   .secondaryButton {
+     display: inline-block;
+     background: transparent;
+     border: 1px solid rgba(228, 226, 225, 0.3);
+     color: #e4e2e1;
+     padding: 1rem 2.5rem;
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 0.75rem;
+     font-weight: 600;
+     letter-spacing: 0.1em;
+     text-transform: uppercase;
+     text-decoration: none;
+     cursor: pointer;
+     transition: all 0.3s ease;
+   }
+   
+   .secondaryButton:hover {
+     border-color: #e4e2e1;
+   }
+   
+   /* ============= ABOUT SECTION ============= */
+   .aboutSection {
+     padding: 8rem 2rem;
+     max-width: 1400px;
+     margin: 0 auto;
+     background-color: #F5E6B3; 
+   }
+   
+   .aboutContent {
+     display: grid;
+     grid-template-columns: 5fr 7fr;
+     gap: 1.5rem;
+   }
+   
+   .aboutText {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+   }
+   
+   .aboutTitle {
+     font-family: 'Noto Serif', serif;
+     font-size: 2rem;
+     font-weight: 600;
+     line-height: 1.2;
+     color: #2E5363; 
+     margin-bottom: 2rem;
+   }
+   
+   .aboutParagraph {
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 1rem;
+     line-height: 1.6;
+     color: #2D2D2D; 
+     margin-bottom: 1.5rem;
+   }
+   
+   .discoverLink {
+     display: inline-flex;
+     align-items: center;
+     gap: 0.75rem;
+     color: #2E5363;
+     text-decoration: none;
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 0.75rem;
+     font-weight: 600;
+     letter-spacing: 0.1em;
+     text-transform: uppercase;
+     margin-top: 1rem;
+     transition: gap 0.3s ease;
+   }
+   
+   .discoverLink:hover {
+     gap: 1rem;
+   }
+   
+   .discoverLink svg {
+     transition: transform 0.3s ease;
+   }
+   
+   .discoverLink:hover svg {
+     transform: translateX(4px);
+   }
+   
+   .aboutImages {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 1rem;
+   }
+   
+   .aboutImageWrapper {
+     /* CAMBIO AQUÍ: Proporción 1:1 (cuadrado) para que las fotos horizontales encajen perfecto */
+     aspect-ratio: 1 / 1; 
+     overflow: hidden;
+   }
+   
+   .aboutImage {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     object-position: center; /* Asegura que el recorte se centre en la comida/patio */
+     transition: all 0.7s ease;
+   }
+   
+   .aboutImage:hover {
+     transform: scale(1.05);
+   }
+   
+   /* ELIMINADAS LAS CLASES .grayscale Y .grayscale:hover */
+   
+   .offsetImage {
+     margin-top: 3rem;
+   }
+   
+   /* ============= PRODUCTS SECTION ============= */
+.productsSection {
+  background-color: #F5E6B3;
+  padding: 4rem 2rem;  /* antes 8rem */
 }
 
-.heroContent {
-  max-width: var(--max-width);
+.productsContainer {
+  max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
 }
 
-.heroEyebrow {
-  font-size: 0.9rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-latte);
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-
-.heroTitle {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 700;
-  color: white;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
-}
-
-.heroSubtitle {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.6;
-  margin-bottom: 2.5rem;
-  max-width: 500px;
-}
-
-.heroBtns {
+.productsHeader {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;  /* antes flex-end */
+  margin-bottom: 2rem;  /* antes 4rem */
+  padding-bottom: 1.25rem;  /* antes 2rem */
+  border-bottom: 1px solid rgba(46, 83, 99, 0.2);  /* antes color gris oscuro */
 }
 
-.heroVisual {
+.productsHeaderText {
   display: flex;
   flex-direction: column;
+}
+
+.productsLabel {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #2E5363;  /* antes #D9B96E, invisible sobre fondo crema */
+  margin-bottom: 0;
+}
+
+.productsNav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.navArrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid #2E5363;  /* antes #434843, invisible sobre crema */
+  background: transparent;
+  color: #2E5363;  /* antes #e4e2e1, invisible sobre crema */
+  display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navArrow:hover:not(:disabled) {
+  background-color: #2E5363;
+  color: #F5E6B3;
+  border-color: #2E5363;
+}
+
+.navArrow:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.productCard {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem;  /* antes 1.5rem */
+  transition: all 0.5s ease;
+}
+
+.productCard:hover {
+  border-color: rgba(217, 185, 110, 0.4);
+}
+
+.productImageWrapper {
+  aspect-ratio: 4 / 3;  /* antes 1/1 cuadrado, ahora más achatado */
+  margin-bottom: 1rem;  /* antes 2rem */
+  overflow: hidden;
   position: relative;
-  gap: 2rem;
+  background-color: #1f2020;
 }
 
-.coffeeArt {
-  font-size: 10rem;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-
-.floatingBadge {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-full);
-  font-size: 1.5rem;
-}
-
-.floatingBadge div {
-  display: flex;
-  flex-direction: column;
-}
-
-.floatingBadge strong {
-  font-size: 0.9rem;
-  color: white;
-}
-
-.floatingBadge small {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.6);
-}
-
-/* MODES */
-.modes {
-  padding: 5rem 0;
-  background: var(--color-foam);
-}
-
-.sectionTitle {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  color: var(--color-espresso);
-  margin-bottom: 2.5rem;
-  text-align: center;
-}
-
-.modesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.modeCard {
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  text-align: center;
-  border: 1px solid rgba(200, 149, 108, 0.2);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-slow);
-}
-
-.modeCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-}
-
-.modeIcon {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.modeCard h3 {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  color: var(--color-espresso);
-  margin-bottom: 0.5rem;
-}
-
-.modeCard p {
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-/* PAYMENTS */
-.payments {
-  padding: 3rem 0;
-  background: var(--color-espresso);
-}
-
-.paymentsInner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.paymentsInner h3 {
-  color: white;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-}
-
-.paymentsInner p {
-  color: rgba(255,255,255,0.6);
-}
-
-.paymentBadges {
-  display: flex;
-  gap: 1rem;
-}
-
-.payBadge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-md);
-  color: white;
-  font-size: 1.2rem;
-}
-
-.payBadge strong {
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-/* FEATURED */
-.featured {
-  padding: 5rem 0;
-}
-
-.featuredGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-.featuredCard {
-  background: white;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid rgba(200, 149, 108, 0.15);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-slow);
-}
-
-.featuredCard:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-
-.featuredImage {
-  height: 180px;
-  background: var(--color-foam);
-  overflow: hidden;
-}
-
-.featuredImage img {
+.productImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 1s ease;
 }
 
-.featuredPlaceholder {
+.productCard:hover .productImage {
+  transform: scale(1.1);
+}
+
+.productPlaceholder {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3.5rem;
-  background: linear-gradient(135deg, var(--color-cream), var(--color-foam));
+  color: #434843;
 }
 
-.featuredInfo {
-  padding: 1.25rem;
-}
-
-.featuredInfo h3 {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--color-espresso);
-  margin-bottom: 0.3rem;
-}
-
-.featuredInfo p {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-  margin-bottom: 1rem;
-  line-height: 1.4;
-}
-
-.featuredFooter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.featuredPrice {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+.premiumBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(233, 195, 73, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(233, 195, 73, 0.4);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.6rem;
   font-weight: 700;
-  color: var(--color-espresso);
+  color: #e9c349;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
 }
 
-/* INFO */
-.info {
-  padding: 4rem 0;
-  background: var(--color-cream);
-}
-
-.infoGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-}
-
-.infoCard {
+.productInfo {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  background: white;
-  padding: 1.5rem;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  font-size: 1.75rem;
+  flex-direction: column;
 }
 
-.infoCard div strong {
-  display: block;
-  font-weight: 600;
-  color: var(--color-espresso);
-  margin-bottom: 0.25rem;
-}
-
-.infoCard div p {
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-/* FOOTER */
-.footer {
-  background: var(--color-charcoal);
-  padding: 2rem 0;
-  text-align: center;
-  color: rgba(255,255,255,0.5);
-  font-size: 0.9rem;
-}
-
-.footer .container {
+.productHeader {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;  /* antes 1rem */
+  gap: 0.5rem;
 }
 
-@media (max-width: 768px) {
-  .hero {
-    padding: 3rem 1.5rem;
-    min-height: auto;
-  }
-
-  .heroContent {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .heroVisual {
-    display: none;
-  }
-
-  .heroBtns {
-    flex-direction: column;
-  }
+.productName {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.1rem;  /* antes 1.5rem, demasiado grande */
+  font-weight: 500;
+  line-height: 1.3;
+  color: #2E5363;
 }
+
+.productPrice {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.1rem;  /* antes 1.5rem */
+  font-weight: 500;
+  line-height: 1.3;
+  color: #D9B96E;
+  white-space: nowrap;
+}
+
+.productDescription {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.85rem;  /* antes 1rem */
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 1rem;  /* antes 2rem */
+}
+
+.quickAddButton {
+  width: 100%;
+  border: 1px solid #2E5363;
+  color: #2E5363;
+  background: transparent;
+  padding: 0.6rem;  /* antes 0.75rem */
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.productCard:hover .quickAddButton {
+  background-color: #2E5363;
+  color: #F5E5C3;
+}
+   
+   /* ============= CTA SECTION ============= */
+   .ctaSection {
+     position: relative;
+     padding: 10rem 0;
+     overflow: hidden;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+   
+   .ctaBackground {
+     position: absolute;
+     inset: 0;
+     z-index: 0;
+   }
+   
+   .ctaImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+  }
+  
+  .ctaOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(46, 83, 99, 0.55);
+  }
+   
+   .ctaContent {
+     position: relative;
+     z-index: 10;
+     text-align: center;
+     padding: 0 1.5rem;
+   }
+   
+   .ctaTitle {
+     font-family: 'Noto Serif', serif;
+     font-size: clamp(2rem, 5vw, 3rem);
+     font-weight: 700;
+     line-height: 1.1;
+     letter-spacing: -0.02em;
+     color: #F5F0E6;
+     margin-bottom: 2rem;
+   }
+   
+   .ctaDescription {
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 1.125rem;
+     line-height: 1.6;
+     color: #CFC8BC;
+     margin-bottom: 3rem;
+     max-width: 500px;
+     margin-left: auto;
+     margin-right: auto;
+   }
+   
+   .ctaButton {
+     display: inline-block;
+     background-color: #D4AF37;
+     color: #1B3022;
+     padding: 1.25rem 3rem;
+     font-family: 'Be Vietnam Pro', sans-serif;
+     font-size: 0.75rem;
+     font-weight: 700;
+     letter-spacing: 0.2em;
+     text-transform: uppercase;
+     text-decoration: none;
+     cursor: pointer;
+     transition: all 0.3s ease;
+   }
+   
+   .ctaButton:hover {
+     background-color: #F5F5DC;
+   }
+   
+   /* ============= FOOTER ============= */
+   .footer {
+     background-color: #2E5363;
+     padding: 3rem 2rem;
+     border-top: 1px solid rgba(217, 185, 110, 0.2);
+   }
+   
+   .footerContent {
+     max-width: 1200px;
+     margin: 0 auto;
+     display: grid;
+     grid-template-columns: 1fr 2fr 1fr;
+     gap: 2rem;
+     align-items: center;
+   }
+   
+   .footerBrand {
+     text-align: left;
+   }
+   
+   .footerLogo {
+     font-family: 'Noto Serif', serif;
+     font-size: 1.125rem;
+     font-weight: 700;
+     color: #F5F0E6;
+     margin-bottom: 0.5rem;
+   }
+   
+   .footerTagline {
+     font-family: 'Noto Serif', serif;
+     font-size: 0.75rem;
+     color: rgba(245, 245, 220, 0.5);
+     text-transform: uppercase;
+     letter-spacing: 0.1em;
+   }
+   
+   .footerLinks {
+     display: flex;
+     justify-content: center;
+     gap: 2rem;
+   }
+   
+   .footerLink {
+     font-family: 'Noto Serif', serif;
+     font-size: 0.75rem;
+     color: rgba(245, 245, 220, 0.5);
+     text-decoration: underline;
+     transition: color 0.3s ease;
+   }
+   
+   .footerLink:hover {
+     color: #F5F5DC;
+   }
+   
+   .footerCopyright {
+     text-align: right;
+   }
+   
+   .footerCopyright p {
+     font-family: 'Noto Serif', serif;
+     font-size: 0.75rem;
+     color: rgba(245, 245, 220, 0.5);
+   }
+   
+   /* ============= RESPONSIVE ============= */
+   @media (max-width: 1024px) {
+     .productsGrid {
+       grid-template-columns: repeat(2, 1fr);
+     }
+     
+     .aboutContent {
+       grid-template-columns: 1fr;
+       gap: 3rem;
+     }
+     
+     .aboutImages {
+       order: -1;
+     }
+   }
+   
+   @media (max-width: 768px) {
+     .navLinks {
+       display: none;
+     }
+     
+     .mobileMenuButton {
+       display: block;
+     }
+     
+     .mobileMenu {
+       display: flex;
+     }
+     
+     .navbar {
+       padding: 1rem;
+     }
+     
+     .heroButtons {
+       flex-direction: column;
+     }
+     
+     .primaryButton,
+     .secondaryButton {
+       width: 100%;
+       text-align: center;
+     }
+     
+     .productsGrid {
+       grid-template-columns: 1fr;
+     }
+     
+     .productsHeader {
+       flex-direction: column;
+       align-items: flex-start;
+       gap: 1.5rem;
+     }
+     
+     .productsNav {
+       display: none;
+     }
+     
+     .aboutSection {
+       padding: 4rem 1.5rem;
+     }
+     
+     .aboutImages {
+       grid-template-columns: 1fr;
+     }
+     
+     .offsetImage {
+       margin-top: 0;
+     }
+     
+     .footerContent {
+       grid-template-columns: 1fr;
+       text-align: center;
+       gap: 1.5rem;
+     }
+     
+     .footerBrand {
+       text-align: center;
+     }
+     
+     .footerLinks {
+       flex-wrap: wrap;
+       justify-content: center;
+     }
+     
+     .footerCopyright {
+       text-align: center;
+     }
+     
+     .ctaSection {
+       padding: 6rem 0;
+     }
+   }
+   
+   @media (max-width: 480px) {
+     .heroTitle {
+       font-size: 1.75rem;
+     }
+     
+     .heroDescription {
+       font-size: 1rem;
+     }
+     
+     .aboutTitle {
+       font-size: 1.5rem;
+     }
+     
+     .productsTitle {
+       font-size: 1.5rem;
+     }
+     
+     .productName {
+       font-size: 1.25rem;
+     }
+     
+     .productPrice {
+       font-size: 1.25rem;
+     }
+   }

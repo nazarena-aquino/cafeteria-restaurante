@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { productApi } from '../../api'
 import { Product, Category } from '../../types'
 import { formatPrice } from '../../utils/format'
@@ -21,10 +21,12 @@ export default function AdminProducts() {
   const [saving, setSaving] = useState(false)
   const [filterCat, setFilterCat] = useState('')
   const [search, setSearch] = useState('')
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string>('')
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    load()
-  }, [])
+  useEffect(() => { load() }, [])
 
   const load = async () => {
     try {
@@ -44,6 +46,8 @@ export default function AdminProducts() {
   const openCreate = () => {
     setEditing(null)
     setForm(EMPTY_FORM)
+    setImageFile(null)
+    setImagePreview('')
     setShowForm(true)
   }
 
@@ -61,7 +65,41 @@ export default function AdminProducts() {
       sort_order: String(product.sort_order),
       allergens: (product.allergens || []).join(', '),
     })
+    setImageFile(null)
+    setImagePreview(product.image_url || '')
     setShowForm(true)
+  }
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validar tipo
+    if (!file.type.startsWith('image/')) {
+      toast.error('Solo se permiten imágenes')
+      return
+    }
+
+    // Validar tamaño (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('La imagen no puede superar 5MB')
+      return
+    }
+
+    setImageFile(file)
+    setImagePreview(URL.createObjectURL(file))
+    // Limpiar URL manual si seleccionan archivo
+    setForm((prev) => ({ ...prev, image_url: '' }))
+  }
+
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, image_url: e.target.value })
+    // Limpiar archivo si escriben URL
+    if (e.target.value) {
+      setImageFile(null)
+      setImagePreview(e.target.value)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,13 +110,34 @@ export default function AdminProducts() {
     }
     setSaving(true)
     try {
+      let finalImageUrl = form.image_url
+
+      // Si hay archivo seleccionado, subirlo primero
+      if (imageFile) {
+        setUploadingImage(true)
+        try {
+          const uploadRes = await productApi.uploadImage(imageFile)
+          finalImageUrl = uploadRes.data.data.url
+          toast.success('Imagen subida correctamente')
+        } catch {
+          toast.error('Error subiendo la imagen')
+          setSaving(false)
+          setUploadingImage(false)
+          return
+        } finally {
+          setUploadingImage(false)
+        }
+      }
+
       const data = {
         ...form,
+        image_url: finalImageUrl || null,
         price: Number(form.price),
         sort_order: Number(form.sort_order) || 0,
         preparation_time: form.preparation_time ? Number(form.preparation_time) : null,
         allergens: form.allergens ? form.allergens.split(',').map((a) => a.trim()).filter(Boolean) : [],
       }
+
       if (editing) {
         await productApi.update(editing.id, data)
         toast.success('Producto actualizado')
@@ -244,6 +303,7 @@ export default function AdminProducts() {
 
             <form className={styles.modalForm} onSubmit={handleSubmit}>
               <div className={styles.formGrid}>
+
                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
                   <label className="form-label">Nombre *</label>
                   <input
@@ -294,12 +354,64 @@ export default function AdminProducts() {
                   />
                 </div>
 
+                {/* SECCIÓN DE IMAGEN */}
                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                  <label className="form-label">URL de imagen</label>
+                  <label className="form-label">Imagen del producto</label>
+
+                  {/* Preview */}
+                  {imagePreview && (
+                    <div className={styles.imagePreview}>
+                      <img src={imagePreview} alt="Preview" />
+                      <button
+                        type="button"
+                        className={styles.removeImage}
+                        onClick={() => {
+                          setImagePreview('')
+                          setImageFile(null)
+                          setForm((prev) => ({ ...prev, image_url: '' }))
+                          if (fileInputRef.current) fileInputRef.current.value = ''
+                        }}
+                      >
+                        ✕ Quitar imagen
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Subir archivo */}
+                  <div className={styles.imageUploadArea}
+                    onClick={() => fileInputRef.current?.click()}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault()
+                      const file = e.dataTransfer.files?.[0]
+                      if (file) {
+                        const fakeEvent = { target: { files: [file] } } as unknown as React.ChangeEvent<HTMLInputElement>
+                        handleImageChange(fakeEvent)
+                      }
+                    }}
+                  >
+                    <span>📁</span>
+                    <p>Clic para seleccionar o arrastrá una imagen aquí</p>
+                    <small>JPG, PNG, WEBP — máx. 5MB</small>
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ display: 'none' }}
+                  />
+
+                  {/* Separador */}
+                  <div className={styles.orDivider}>
+                    <span>o pegá una URL</span>
+                  </div>
+
+                  {/* URL manual */}
                   <input
                     className="form-input"
                     value={form.image_url}
-                    onChange={(e) => setForm({ ...form, image_url: e.target.value })}
+                    onChange={handleUrlChange}
                     placeholder="https://..."
                   />
                 </div>
@@ -362,7 +474,7 @@ export default function AdminProducts() {
                   Cancelar
                 </button>
                 <button type="submit" className="btn btn-primary" disabled={saving}>
-                  {saving ? 'Guardando...' : editing ? 'Actualizar' : 'Crear producto'}
+                  {uploadingImage ? '⬆️ Subiendo imagen...' : saving ? 'Guardando...' : editing ? 'Actualizar' : 'Crear producto'}
                 </button>
               </div>
             </form>

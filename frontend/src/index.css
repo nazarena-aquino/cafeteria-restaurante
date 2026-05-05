@@ -3,20 +3,31 @@
    Design: Warm, artisan, elegant
    ================================= */
 
-:root {
-  /* Paleta cálida de cafetería */
-  --color-espresso: #2C1810;
-  --color-coffee: #4A2C2A;
-  --color-latte: #C8956C;
-  --color-cream: #F5E6D3;
-  --color-foam: #FAF3E8;
-  --color-warm-white: #FEFCF8;
-  --color-gold: #C9943A;
-  --color-sage: #7A8C6E;
-  --color-charcoal: #2D2D2D;
-  --color-muted: #8B7B6B;
-  --color-error: #C0392B;
-  --color-success: #27AE60;
+   :root {
+    /* NUEVA IDENTIDAD VORA */
+    --color-primary: #3E5F67;
+    --color-primary-dark: #2f4a50;
+  
+    --color-background: #131313;
+    --color-surface: #1f1f1f;
+  
+    --color-gold: #D4AF37;
+  
+    --color-text: #F5F5DC;
+    --color-muted: rgba(245, 245, 220, 0.6);
+  
+    --color-border: rgba(212, 175, 55, 0.2);
+
+    /* ===== VORA BRAND COLORS ===== */
+  --color-primary: #2E5363;
+  --color-primary-dark: #223B46;
+  --color-gold: #D9B96E;
+  --color-cream: #F5F0E6;
+  --color-text-secondary: #CFC8BC;
+  --color-background: #131313;
+  --color-surface: #1B1E22;
+  
+
 
   /* Tipografía */
   --font-display: 'Playfair Display', Georgia, serif;
@@ -59,8 +70,8 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--color-warm-white);
-  color: var(--color-charcoal);
+    background-color: var(--color-background);
+    color: var(--color-text);
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -115,13 +126,13 @@ input, textarea, select {
 }
 
 .btn-primary {
-  background: var(--color-espresso);
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-text);
 }
+
 .btn-primary:hover {
-  background: var(--color-coffee);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: var(--color-gold);
+  color: var(--color-primary-dark);
 }
 
 .btn-secondary {

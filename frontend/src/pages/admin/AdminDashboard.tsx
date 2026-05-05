@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { orderApi, configApi } from '../../api'
 import { formatPrice, formatDate, orderStatusLabel, orderStatusColor, orderTypeLabel } from '../../utils/format'
 import { Order, BusinessConfig } from '../../types'
+import { socket } from '../../utils/socket';
 import toast from 'react-hot-toast'
 import styles from './AdminDashboard.module.css'
 
@@ -21,8 +22,15 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     load()
-    const interval = setInterval(load, 30000)
-    return () => clearInterval(interval)
+  
+    socket.on('nuevo_pedido', () => {
+      load() // recargar stats cuando llega un pedido nuevo
+      toast.success('🆕 Nuevo pedido recibido')
+    })
+  
+    return () => {
+      socket.off('nuevo_pedido')
+    }
   }, [])
 
   const load = async () => {

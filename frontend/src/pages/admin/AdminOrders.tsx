@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { orderApi } from '../../api'
 import { Order, OrderStatus } from '../../types'
 import { formatPrice, formatDate, orderStatusLabel, orderStatusColor, orderTypeLabel, paymentStatusLabel } from '../../utils/format'
+import { socket } from '../../utils/socket';
 import toast from 'react-hot-toast'
 import styles from './AdminOrders.module.css'
 
@@ -19,8 +20,23 @@ export default function AdminOrders() {
 
   useEffect(() => {
     load()
-    const interval = setInterval(load, 20000)
-    return () => clearInterval(interval)
+  
+    // Escuchar eventos en tiempo real
+    socket.on('nuevo_pedido', (pedido) => {
+      setOrders((prev) => [pedido, ...prev])
+      toast.success(`🆕 Nuevo pedido: ${pedido.order_number}`)
+    })
+  
+    socket.on('pedido_actualizado', (pedidoActualizado) => {
+      setOrders((prev) =>
+        prev.map((o) => o.id === pedidoActualizado.id ? { ...o, ...pedidoActualizado } : o)
+      )
+    })
+  
+    return () => {
+      socket.off('nuevo_pedido')
+      socket.off('pedido_actualizado')
+    }
   }, [filterStatus, filterType, page])
 
   const load = async () => {

@@ -9,9 +9,10 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.inner}>
-        <Link to="/" className={styles.logo}>
-          <span className={styles.logoIcon}>☕</span>
-          <span className={styles.logoText}>Mi Cafetería</span>
+        
+        {/* LOGO: Cambiado a texto elegante */}
+        <Link to="/" className={styles.logoText}>
+          VORA
         </Link>
 
         <div className={styles.links}>
@@ -31,7 +32,7 @@ export default function Navbar() {
 
         <Link to="/cart" className={styles.cartBtn}>
           <span className={styles.cartIcon}>🛒</span>
-          <span>Carrito</span>
+          <span className={styles.cartText}>Carrito</span>
           {itemCount > 0 && (
             <span className={styles.badge}>{itemCount}</span>
           )}
