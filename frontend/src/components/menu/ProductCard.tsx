@@ -26,45 +26,47 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div className={styles.card}>
+      {/* Image */}
       <div className={styles.imageWrap}>
         {product.image_url ? (
           <img src={product.image_url} alt={product.name} className={styles.image} />
         ) : (
-          <div className={styles.imagePlaceholder}>
-            <span>☕</span>
-          </div>
+          <div className={styles.imagePlaceholder}>☕</div>
         )}
         {product.is_featured && (
-          <span className={styles.featuredBadge}>⭐ Destacado</span>
+          <span className={styles.featuredBadge}>Premium</span>
         )}
       </div>
 
+      {/* Body */}
       <div className={styles.body}>
-        <div className={styles.info}>
+        <div className={styles.nameRow}>
           <h3 className={styles.name}>{product.name}</h3>
-          {product.description && (
-            <p className={styles.desc}>{product.description}</p>
-          )}
-          {product.preparation_time && (
-            <p className={styles.time}>⏱ {product.preparation_time} min</p>
-          )}
-          {product.allergens && product.allergens.length > 0 && (
-            <p className={styles.allergens}>
-              ⚠️ {product.allergens.join(', ')}
-            </p>
-          )}
+          <span className={styles.price}>{formatPrice(product.price)}</span>
         </div>
 
-        <div className={styles.footer}>
-          <span className={styles.price}>{formatPrice(product.price)}</span>
-          <button
-            onClick={handleAdd}
-            disabled={!product.is_available}
-            className={`btn btn-primary btn-sm ${styles.addBtn} ${added ? styles.added : ''}`}
-          >
-            {added ? '✓ Agregado' : '+ Agregar'}
-          </button>
-        </div>
+        {product.description && (
+          <p className={styles.desc}>{product.description}</p>
+        )}
+
+        {(product.preparation_time || (product.allergens && product.allergens.length > 0)) && (
+          <div className={styles.meta}>
+            {product.preparation_time && (
+              <span className={styles.time}>⏱ {product.preparation_time} min</span>
+            )}
+            {product.allergens && product.allergens.length > 0 && (
+              <span className={styles.allergens}>⚠️ {product.allergens.join(', ')}</span>
+            )}
+          </div>
+        )}
+
+        <button
+          onClick={handleAdd}
+          disabled={!product.is_available}
+          className={`${styles.addBtn} ${added ? styles.added : ''}`}
+        >
+          {!product.is_available ? 'No disponible' : added ? '✓ Agregado' : 'Agregar'}
+        </button>
       </div>
     </div>
   )

@@ -1,55 +1,81 @@
 /* ===================================
-   CAFETERÍA & BAR - GLOBAL STYLES
-   Design: Warm, artisan, elegant
+   VORA — GLOBAL STYLES
+   Design: Light, Warm, Gastronomic
    ================================= */
 
-   :root {
-    /* NUEVA IDENTIDAD VORA */
-    --color-primary: #3E5F67;
-    --color-primary-dark: #2f4a50;
-  
-    --color-background: #131313;
-    --color-surface: #1f1f1f;
-  
-    --color-gold: #D4AF37;
-  
-    --color-text: #F5F5DC;
-    --color-muted: rgba(245, 245, 220, 0.6);
-  
-    --color-border: rgba(212, 175, 55, 0.2);
+:root {
+  /* ===== VORA LIGHT THEME ===== */
+  --color-background: #fcf9f3;
+  --color-surface: #fcf9f3;
+  --color-surface-container: #f0eee8;
+  --color-surface-container-low: #f6f3ed;
+  --color-surface-container-high: #ebe8e2;
+  --color-on-background: #1c1c18;
+  --color-on-surface: #1c1c18;
+  --color-on-surface-variant: #42474b;
 
-    /* ===== VORA BRAND COLORS ===== */
-  --color-primary: #2E5363;
-  --color-primary-dark: #223B46;
-  --color-gold: #D9B96E;
-  --color-cream: #F5F0E6;
-  --color-text-secondary: #CFC8BC;
-  --color-background: #131313;
-  --color-surface: #1B1E22;
-  
+  /* Primary (deep teal navy) */
+  --color-primary: #152d37;
+  --color-primary-container: #2c434e;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #97afbc;
 
+  /* Tertiary / Gold */
+  --color-tertiary-fixed: #ffdea7;
+  --color-on-tertiary-fixed: #271900;
+  --color-tertiary-fixed-dim: #f3be59;
+  --color-on-tertiary-container: #d5a341;
+  --color-tertiary-container: #553b00;
 
-  /* Tipografía */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  /* Secondary / Warm Sand */
+  --color-secondary: #695e39;
+  --color-secondary-container: #f2e2b3;
+  --color-on-secondary-container: #6f643e;
 
-  /* Espaciado */
-  --max-width: 1200px;
-  --nav-height: 70px;
+  /* Outline */
+  --color-outline: #73787b;
+  --color-outline-variant: #c2c7cb;
 
-  /* Sombras */
-  --shadow-sm: 0 1px 3px rgba(44, 24, 16, 0.08);
-  --shadow-md: 0 4px 16px rgba(44, 24, 16, 0.12);
-  --shadow-lg: 0 8px 32px rgba(44, 24, 16, 0.16);
-  --shadow-xl: 0 20px 60px rgba(44, 24, 16, 0.2);
+  /* Status */
+  --color-error: #ba1a1a;
+  --color-success: #065F46;
 
-  /* Bordes */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
+  /* ===== LEGACY ALIASES (backward compat) ===== */
+  --color-espresso: #2c434e;
+  --color-coffee: #334a55;
+  --color-latte: #d5a341;
+  --color-gold: #ffdea7;
+  --color-cream: #f2e2b3;
+  --color-foam: #f6f3ed;
+  --color-charcoal: #1c1c18;
+  --color-sage: #4a626d;
+  --color-muted: #42474b;
+  --color-text: #1c1c18;
+  --color-text-secondary: #42474b;
+  --color-border: #c2c7cb;
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-display: 'Noto Serif', Georgia, serif;
+  --font-body: 'Work Sans', system-ui, sans-serif;
+
+  /* ===== LAYOUT ===== */
+  --max-width: 1280px;
+  --nav-height: 72px;
+
+  /* ===== SHADOWS ===== */
+  --shadow-sm: 0 1px 3px rgba(44, 67, 78, 0.06);
+  --shadow-md: 0 4px 16px rgba(44, 67, 78, 0.10);
+  --shadow-lg: 0 8px 32px rgba(44, 67, 78, 0.14);
+  --shadow-xl: 0 20px 60px rgba(44, 67, 78, 0.18);
+
+  /* ===== BORDERS ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Transiciones */
+  /* ===== TRANSITIONS ===== */
   --transition: 200ms ease;
   --transition-slow: 400ms ease;
 }
@@ -70,8 +96,8 @@ html {
 
 body {
   font-family: var(--font-body);
-    background-color: var(--color-background);
-    color: var(--color-text);
+  background-color: var(--color-background);
+  color: var(--color-on-background);
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -79,7 +105,6 @@ body {
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   line-height: 1.2;
-  color: var(--color-espresso);
 }
 
 a {
@@ -103,54 +128,68 @@ input, textarea, select {
   font-family: var(--font-body);
 }
 
-/* ===== UTILIDADES ===== */
+/* Material Symbols */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  user-select: none;
+}
+
+/* ===== CONTAINER ===== */
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
+/* ===== BUTTONS ===== */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  font-size: 0.95rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   transition: all var(--transition);
   cursor: pointer;
   border: 2px solid transparent;
   white-space: nowrap;
+  font-family: var(--font-body);
 }
 
 .btn-primary {
-  background: var(--color-primary);
-  color: var(--color-text);
+  background: var(--color-primary-container);
+  color: var(--color-on-primary);
 }
 
 .btn-primary:hover {
-  background: var(--color-gold);
-  color: var(--color-primary-dark);
+  background: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
   background: transparent;
-  color: var(--color-espresso);
-  border-color: var(--color-espresso);
+  color: var(--color-primary-container);
+  border-color: var(--color-outline-variant);
 }
+
 .btn-secondary:hover {
-  background: var(--color-espresso);
-  color: white;
+  border-color: var(--color-primary-container);
+  background: var(--color-surface-container);
 }
 
 .btn-gold {
-  background: var(--color-gold);
-  color: white;
+  background: var(--color-tertiary-fixed);
+  color: var(--color-on-tertiary-fixed);
 }
+
 .btn-gold:hover {
-  background: #b8832e;
+  background: var(--color-tertiary-fixed-dim);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
@@ -159,22 +198,23 @@ input, textarea, select {
   background: var(--color-error);
   color: white;
 }
+
 .btn-danger:hover {
-  background: #a93226;
+  opacity: 0.9;
 }
 
 .btn-sm {
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.7rem;
 }
 
 .btn-lg {
-  padding: 1rem 2rem;
-  font-size: 1.05rem;
+  padding: 1rem 2.5rem;
+  font-size: 0.8rem;
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
 }
@@ -184,7 +224,7 @@ input, textarea, select {
   background: white;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(200, 149, 108, 0.15);
+  border: 1px solid var(--color-outline-variant);
   overflow: hidden;
 }
 
@@ -194,9 +234,9 @@ input, textarea, select {
   align-items: center;
   padding: 0.25rem 0.75rem;
   border-radius: var(--radius-full);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.06em;
 }
 
 /* ===== FORM ===== */
@@ -207,9 +247,11 @@ input, textarea, select {
 }
 
 .form-label {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--color-espresso);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary-container);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .form-input,
@@ -217,20 +259,21 @@ input, textarea, select {
 .form-textarea {
   width: 100%;
   padding: 0.7rem 1rem;
-  border: 1.5px solid rgba(200, 149, 108, 0.3);
+  border: 1.5px solid var(--color-outline-variant);
   border-radius: var(--radius-md);
   font-size: 0.95rem;
-  color: var(--color-charcoal);
+  color: var(--color-on-surface);
   background: white;
-  transition: border-color var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
+  font-family: var(--font-body);
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  border-color: var(--color-latte);
-  box-shadow: 0 0 0 3px rgba(200, 149, 108, 0.15);
+  border-color: var(--color-primary-container);
+  box-shadow: 0 0 0 3px rgba(44, 67, 78, 0.10);
 }
 
 .form-textarea {
@@ -242,8 +285,8 @@ input, textarea, select {
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid rgba(200, 149, 108, 0.2);
-  border-top-color: var(--color-latte);
+  border: 3px solid var(--color-outline-variant);
+  border-top-color: var(--color-primary-container);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -264,10 +307,10 @@ input, textarea, select {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-foam);
+  background: var(--color-surface-container);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-latte);
+  background: var(--color-outline-variant);
   border-radius: 3px;
 }
 
@@ -323,14 +366,14 @@ input, textarea, select {
 }
 
 /* ===== STATUS COLORS ===== */
-.status-pending { background: #FEF3C7; color: #92400E; }
+.status-pending   { background: #FEF3C7; color: #92400E; }
 .status-confirmed { background: #DBEAFE; color: #1E40AF; }
 .status-preparing { background: #EDE9FE; color: #5B21B6; }
-.status-ready { background: #D1FAE5; color: #065F46; }
+.status-ready     { background: #D1FAE5; color: #065F46; }
 .status-delivered { background: #F3F4F6; color: #374151; }
 .status-cancelled { background: #FEE2E2; color: #991B1B; }
 
-.payment-pending { background: #FEF3C7; color: #92400E; }
-.payment-paid { background: #D1FAE5; color: #065F46; }
-.payment-failed { background: #FEE2E2; color: #991B1B; }
+.payment-pending  { background: #FEF3C7; color: #92400E; }
+.payment-paid     { background: #D1FAE5; color: #065F46; }
+.payment-failed   { background: #FEE2E2; color: #991B1B; }
 .payment-refunded { background: #F3F4F6; color: #374151; }

@@ -1,6 +1,7 @@
 .main {
   min-height: 100vh;
   padding: 2rem 0 4rem;
+  background: #fcf9f3;
 }
 
 .emptyCart {
@@ -15,17 +16,19 @@
 
 .emptyIcon {
   font-size: 5rem;
+  line-height: 1;
 }
 
 .emptyCart h2 {
-  font-family: var(--font-display);
+  font-family: 'Noto Serif', Georgia, serif;
   font-size: 2rem;
-  color: var(--color-espresso);
+  color: #2c434e;
 }
 
 .emptyCart p {
-  color: var(--color-muted);
+  color: #42474b;
   margin-bottom: 0.5rem;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .layout {
@@ -49,18 +52,18 @@
 }
 
 .itemsHeader h1 {
-  font-family: var(--font-display);
+  font-family: 'Noto Serif', Georgia, serif;
   font-size: 2rem;
-  color: var(--color-espresso);
+  color: #2c434e;
 }
 
 .item {
   background: white;
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   padding: 1.25rem;
   margin-bottom: 1rem;
-  border: 1px solid rgba(200,149,108,0.15);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid #e5e2dc;
+  box-shadow: 0 1px 3px rgba(44, 67, 78, 0.06);
   animation: fadeIn 0.2s ease;
 }
 
@@ -71,14 +74,14 @@
 }
 
 .itemEmoji {
-  font-size: 2.5rem;
-  width: 60px;
-  height: 60px;
+  font-size: 2rem;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-foam);
-  border-radius: var(--radius-md);
+  background: #f6f3ed;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
@@ -87,33 +90,34 @@
 }
 
 .itemInfo h3 {
-  font-family: var(--font-display);
+  font-family: 'Noto Serif', Georgia, serif;
   font-size: 1.05rem;
-  color: var(--color-espresso);
+  color: #2c434e;
   margin-bottom: 0.2rem;
 }
 
 .unitPrice {
   font-size: 0.85rem;
-  color: var(--color-muted);
+  color: #42474b;
   margin-bottom: 0.5rem;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .notesInput {
   width: 100%;
   padding: 0.45rem 0.75rem;
-  border: 1.5px solid rgba(200,149,108,0.25);
-  border-radius: var(--radius-sm);
+  border: 1.5px solid #c2c7cb;
+  border-radius: 4px;
   font-size: 0.83rem;
-  color: var(--color-charcoal);
-  background: var(--color-foam);
+  color: #1c1c18;
+  background: #f6f3ed;
   outline: none;
-  font-family: var(--font-body);
-  transition: border-color var(--transition);
+  font-family: 'Work Sans', sans-serif;
+  transition: border-color 0.2s ease;
 }
 
 .notesInput:focus {
-  border-color: var(--color-latte);
+  border-color: #2c434e;
 }
 
 .notesInput::placeholder {
@@ -128,18 +132,17 @@
 }
 
 .itemSubtotal {
-  font-family: var(--font-display);
+  font-family: 'Noto Serif', Georgia, serif;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-espresso);
+  color: #2c434e;
 }
 
 .qtyControl {
   display: flex;
   align-items: center;
-  gap: 0;
-  border: 1.5px solid rgba(200,149,108,0.3);
-  border-radius: var(--radius-md);
+  border: 1.5px solid #c2c7cb;
+  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -154,12 +157,12 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background var(--transition);
-  color: var(--color-espresso);
+  transition: background 0.2s ease;
+  color: #2c434e;
 }
 
 .qtyBtn:hover {
-  background: var(--color-cream);
+  background: #f6f3ed;
 }
 
 .qty {
@@ -167,61 +170,63 @@
   text-align: center;
   font-weight: 600;
   font-size: 0.95rem;
-  color: var(--color-espresso);
-  background: var(--color-foam);
+  color: #2c434e;
+  background: #f6f3ed;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .removeBtn {
-  color: var(--color-muted);
+  color: #42474b;
   font-size: 0.8rem;
   cursor: pointer;
   padding: 4px 6px;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition);
+  border-radius: 4px;
+  transition: all 0.2s ease;
   background: none;
   border: none;
 }
 
 .removeBtn:hover {
-  color: var(--color-error);
+  color: #ba1a1a;
   background: #FEE2E2;
 }
 
 .keepBrowsing {
-  color: var(--color-latte);
+  color: #d5a341;
   font-size: 0.9rem;
   text-decoration: none;
   margin-top: 0.5rem;
   display: inline-block;
-  transition: color var(--transition);
+  transition: color 0.2s ease;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .keepBrowsing:hover {
-  color: var(--color-espresso);
+  color: #2c434e;
 }
 
-/* Summary */
+/* ── Summary ── */
 .summary {
   position: sticky;
-  top: calc(var(--nav-height) + 1rem);
+  top: calc(72px + 1rem);
 }
 
 .summaryCard {
   background: white;
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   padding: 2rem;
-  border: 1px solid rgba(200,149,108,0.2);
-  box-shadow: var(--shadow-md);
+  border: 1px solid #e5e2dc;
+  box-shadow: 0 4px 16px rgba(44, 67, 78, 0.10);
 }
 
 .summaryCard h2 {
-  font-family: var(--font-display);
+  font-family: 'Noto Serif', Georgia, serif;
   font-size: 1.5rem;
-  color: var(--color-espresso);
+  color: #2c434e;
   margin-bottom: 1.5rem;
 }
 
@@ -237,12 +242,13 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.875rem;
-  color: var(--color-muted);
+  color: #42474b;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .divider {
   height: 1px;
-  background: rgba(200,149,108,0.2);
+  background: #e5e2dc;
   margin: 1rem 0;
 }
 
@@ -256,27 +262,29 @@
 .total span:first-child {
   font-weight: 600;
   font-size: 1rem;
-  color: var(--color-espresso);
+  color: #2c434e;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .totalAmount {
-  font-family: var(--font-display);
+  font-family: 'Noto Serif', Georgia, serif;
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-espresso);
+  color: #2c434e;
 }
 
 .shippingNote {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  background: var(--color-foam);
+  background: #f6f3ed;
   padding: 0.75rem;
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   margin-bottom: 1.5rem;
   font-size: 0.8rem;
-  color: var(--color-muted);
-  line-height: 1.4;
+  color: #42474b;
+  line-height: 1.5;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .checkoutBtn {

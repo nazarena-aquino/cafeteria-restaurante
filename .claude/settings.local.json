@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /c/Users/mrome/OneDrive/Escritorio/Projects/cafeteria-restaurante/frontend && find . -not -path './node_modules/*' -type f \\\\\\( -name \"*.tsx\" -o -name \"*.jsx\" -o -name \"*.ts\" -o -name \"*.js\" -o -name \"*.json\" -o -name \"*.css\" \\\\\\) | sort)",
+      "Read(//c/c/Users/mrome/OneDrive/Escritorio/Projects/cafeteria-restaurante/**)"
+    ]
+  }
+}
