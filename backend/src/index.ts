@@ -4,12 +4,29 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 import routes from './routes';
 
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app);
 const PORT = process.env.PORT || 3001;
+
+export const io = new Server(httpServer, {
+  cors: {
+    origin: true,
+    methods: ['GET', 'POST'],
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('🔌 Cliente conectado:', socket.id);
+  socket.on('disconnect', () => {
+    console.log('🔌 Cliente desconectado:', socket.id);
+  });
+});
 
 // ========================
 // MIDDLEWARES DE SEGURIDAD
@@ -79,7 +96,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 // ========================
 // INICIAR SERVIDOR
 // ========================
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`\n☕ ================================`);
   console.log(`   Cafetería API corriendo`);
   console.log(`   http://localhost:${PORT}`);

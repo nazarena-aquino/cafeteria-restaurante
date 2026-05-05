@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { io } from '../index';
 import { supabaseAdmin } from '../utils/supabase';
 import { sendSuccess, sendError, generateOrderNumber } from '../utils/response';
 import { CreateOrderRequest } from '../types';
@@ -128,7 +129,10 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
       .eq('id', order.id)
       .single();
 
-    sendSuccess(res, completeOrder, 'Pedido creado exitosamente', 201);
+    // Notificar a todos los admins conectados
+io.emit('nuevo_pedido', completeOrder);
+
+sendSuccess(res, completeOrder, 'Pedido creado exitosamente', 201);
   } catch (err) {
     console.error('Error en createOrder:', err);
     sendError(res, 'Error interno del servidor', 500);
@@ -235,7 +239,9 @@ export const updateOrderStatus = async (req: Request, res: Response): Promise<vo
       .single();
 
     if (error) throw error;
-    sendSuccess(res, data, `Estado actualizado a: ${status}`);
+    io.emit('pedido_actualizado', data);
+
+sendSuccess(res, data, `Estado actualizado a: ${status}`);
   } catch (err) {
     sendError(res, 'Error actualizando estado del pedido', 500);
   }

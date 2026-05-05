@@ -5,6 +5,10 @@ import {
   getCategories, getAllCategories, createCategory, updateCategory, deleteCategory
 } from '../controllers/products.controller';
 import { authMiddleware } from '../middleware/auth';
+import multer from 'multer';
+import { uploadProductImage } from '../controllers/products.controller';
+
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
 const router = Router();
 
@@ -16,6 +20,7 @@ router.get('/featured', (req, res) => {
 });
 router.get('/categories/public', getCategories);
 router.get('/:id', getProductById);
+router.post('/admin/upload-image', authMiddleware, upload.single('image'), uploadProductImage);
 
 // Rutas de admin
 router.get('/admin/all', authMiddleware, getAllProducts);
