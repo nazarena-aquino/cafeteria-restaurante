@@ -79,14 +79,14 @@ export default function HomePage() {
           <div className={styles.aboutImages}>
             <div className={styles.aboutImageWrapper}>
               <img 
-                src="public/img/cafe-medialunas.png" 
+                src="https://clnfokibaydtkepvcoys.supabase.co/storage/v1/object/public/product-images/cafe-medialunas.png" 
                 alt="Interior Detail" 
                 className={`${styles.aboutImage} ${styles.grayscale}`}
               />
             </div>
             <div className={`${styles.aboutImageWrapper} ${styles.offsetImage}`}>
               <img 
-                src="public/img/cafe-dona.png" 
+                src="https://clnfokibaydtkepvcoys.supabase.co/storage/v1/object/public/product-images/cafe-dona.png" 
                 alt="Coffee prep" 
                 className={styles.aboutImage}
               />
@@ -187,7 +187,7 @@ export default function HomePage() {
       <section className={styles.ctaSection}>
         <div className={styles.ctaBackground}>
           <img 
-            src="public/img/local.png" 
+            src="https://clnfokibaydtkepvcoys.supabase.co/storage/v1/object/public/product-images/local.png" 
             alt="Background Atmosphere" 
             className={styles.ctaImage}
           />
