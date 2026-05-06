@@ -140,8 +140,8 @@
 
 .main {
   flex: 1;
-  margin-left: 260px;
-  padding: 2rem;
+  margin-left: 245px;
+  padding: 1rem 1.25rem;  /* antes 2rem */
   min-height: 100vh;
 }
 
@@ -151,7 +151,7 @@
   }
   .main {
     margin-left: 200px;
-    padding: 1rem;
+    padding: 0.75rem 1rem;  /* antes 1rem */
   }
 }
 

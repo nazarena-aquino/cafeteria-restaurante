@@ -247,16 +247,7 @@ export default function HomePage() {
             </a>
           </div>
 
-          <div className={styles.footerSocial}>
-            <a
-              href="https://www.instagram.com/vora.fsa/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <span className={`material-symbols-outlined ${styles.socialIcon}`}>photo_camera</span>
-            </a>
-          </div>
+          
         </div>
       </footer>
     </div>

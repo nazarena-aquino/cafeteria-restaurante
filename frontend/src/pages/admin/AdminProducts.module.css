@@ -10,7 +10,7 @@
 
 .pageHeader h1 {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.4rem; /* antes 1.8rem */
   color: var(--color-espresso);
   margin-bottom: 0.2rem;
 }
@@ -37,13 +37,13 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: 0.78rem; /* antes 0.875rem */
 }
 
 .table th {
-  padding: 0.9rem 1rem;
+  padding: 0.6rem 0.75rem; /* antes 0.9rem 1rem */
   text-align: left;
-  font-size: 0.78rem;
+  font-size: 0.7rem; /* antes 0.78rem */
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -53,39 +53,27 @@
 }
 
 .table td {
-  padding: 0.9rem 1rem;
+  padding: 0.5rem 0.75rem; /* antes 0.9rem 1rem */
   border-bottom: 1px solid rgba(200,149,108,0.1);
   color: var(--color-charcoal);
   vertical-align: middle;
 }
 
-.table tr:last-child td {
-  border-bottom: none;
-}
-
-.table tr:hover td {
-  background: var(--color-foam);
-}
-
-.unavailableRow td {
-  opacity: 0.55;
-}
-
 .productCell {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem; /* antes 0.75rem */
 }
 
 .productThumb {
-  width: 48px;
-  height: 48px;
+  width: 36px; /* antes 48px */
+  height: 36px; /* antes 48px */
   border-radius: var(--radius-md);
   background: var(--color-foam);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.1rem; /* antes 1.4rem */
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -98,21 +86,27 @@
 
 .productName {
   font-weight: 600;
+  font-size: 0.82rem; /* agregado */
   color: var(--color-espresso);
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.1rem;
 }
 
 .productDesc {
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* antes 0.75rem */
   color: var(--color-muted);
+  /* limitar a 1 línea para ahorrar espacio */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
 }
 
 .catTag {
   background: var(--color-cream);
   color: var(--color-coffee);
-  padding: 0.2rem 0.6rem;
+  padding: 0.15rem 0.5rem; /* antes 0.2rem 0.6rem */
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* antes 0.75rem */
   font-weight: 500;
   white-space: nowrap;
 }
@@ -120,6 +114,7 @@
 .price {
   font-family: var(--font-display);
   font-weight: 700;
+  font-size: 0.82rem; /* agregado */
   color: var(--color-espresso);
 }
 
@@ -129,8 +124,10 @@
   cursor: pointer;
   border: none;
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* antes 0.75rem */
   font-weight: 600;
+  padding: 0.2rem 0.5rem; /* agregado para achicar el badge */
+  border-radius: var(--radius-full);
   transition: all var(--transition);
 }
 
@@ -142,19 +139,24 @@
   cursor: pointer;
   border: none;
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* antes 0.75rem */
   font-weight: 600;
+  padding: 0.2rem 0.5rem; /* agregado */
+  border-radius: var(--radius-full);
   transition: all var(--transition);
 }
 
 .unavailable:hover { opacity: 0.8; }
 
-.featured { color: #C9943A; font-size: 1rem; }
-.noFeatured { color: #ddd; }
-
 .actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.35rem; /* antes 0.5rem */
+}
+
+/* Achicar los botones de acciones */
+.actions .btn {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.72rem;
 }
 
 /* Modal */
@@ -338,4 +340,78 @@
   flex: 1;
   height: 1px;
   background: rgba(200,149,108,0.25);
+}
+
+/* Override global para botones dentro de la tabla */
+.tableWrap button,
+.tableWrap a {
+  font-size: 0.62rem !important;
+  padding: 0.3rem 0.6rem !important;
+}
+
+/* Forzar tamaño de badges de estado */
+.available,
+.unavailable {
+  font-size: 0.60rem !important;
+  padding: 0.1rem 0.4rem !important;
+  border-radius: var(--radius-full) !important;
+}
+
+/* Forzar tamaño de botones de acciones */
+.actions button {
+  font-size: 0.60rem !important;
+  padding: 0.20rem 0.5rem !important;
+}
+
+/* Achicar el nombre del producto cuando ocupa dos líneas */
+.productName {
+  font-weight: 600;
+  font-size: 0.78rem !important;
+  color: var(--color-espresso);
+  margin-bottom: 0.1rem;
+  line-height: 1.2;
+}
+
+/* Reducir padding general de celdas un poco más */
+.table td {
+  padding: 0.35rem 0.6rem !important;
+  border-bottom: 1px solid rgba(200,149,108,0.1);
+  color: var(--color-charcoal);
+  vertical-align: middle;
+}
+
+.table th {
+  padding: 0.5rem 0.6rem !important;
+}
+
+/* Botón nuevo producto más chico */
+.pageHeader .btn,
+.pageHeader button {
+  font-size: 0.78rem !important;
+  padding: 0.5rem 1rem !important;
+}
+
+/* Botón editar y eliminar más chicos */
+.actions button {
+  font-size: 0.65rem !important;
+  padding: 0.2rem 0.4rem !important;
+  gap: 0.2rem !important;
+}
+
+/* Badge disponible más chico */
+.available,
+.unavailable {
+  font-size: 0.6rem !important;
+  padding: 0.15rem 0.4rem !important;
+}
+
+/* Nombres que ocupan dos líneas — forzar una sola */
+.productName {
+  font-size: 0.78rem !important;
+  font-weight: 600;
+  color: var(--color-espresso);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
 }

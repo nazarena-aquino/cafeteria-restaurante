@@ -26,11 +26,12 @@
 .catCard {
   background: white;
   border-radius: var(--radius-lg);
-  padding: 1.25rem;
+  padding: 1rem;
   border: 1px solid rgba(200,149,108,0.15);
   box-shadow: var(--shadow-sm);
   display: flex;
-  gap: 1rem;
+  flex-direction: column; /* antes era row, ahora columna */
+  gap: 0.75rem;
   transition: box-shadow var(--transition);
 }
 
@@ -39,16 +40,21 @@
 .catCard.inactive { opacity: 0.5; }
 
 .catIcon {
-  width: 52px;
-  height: 52px;
+  width: 36px; /* antes 52px */
+  height: 36px;
   background: var(--color-foam);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
+  font-size: 1.2rem; /* antes 1.75rem */
   flex-shrink: 0;
   overflow: hidden;
+}
+
+/* Fila superior: ícono + nombre + badge */
+.catCard > .catIcon {
+  display: none; /* ocultamos el ícono grande, queda más limpio */
 }
 
 .catIcon img {
@@ -57,35 +63,59 @@
   object-fit: cover;
 }
 
-.catBody { flex: 1; min-width: 0; }
+.catBody {
+  flex: 1;
+  min-width: 0;
+}
 
 .catBody h3 {
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--color-espresso);
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .catSlug {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: var(--color-muted);
   font-family: monospace;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .catDesc {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--color-muted);
   line-height: 1.3;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;        /* ← agregar esta línea */
+  overflow: hidden;
 }
 
 .catOrder {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: #bbb;
 }
 
-.catActions { display: flex; flex-direction: column; align-items: flex-end; }
+/* Acciones en fila horizontal abajo */
+.catActions {
+  display: flex;
+  flex-direction: row; /* antes columna */
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(200,149,108,0.1);
+  padding-top: 0.6rem;
+  margin-top: auto;
+}
 
 .activeBadge {
   background: #D1FAE5;
@@ -93,8 +123,14 @@
   cursor: pointer;
   border: none;
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  transition: opacity var(--transition);
 }
+
+.activeBadge:hover { opacity: 0.8; }
 
 .inactiveBadge {
   background: #FEE2E2;
@@ -102,8 +138,14 @@
   cursor: pointer;
   border: none;
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  transition: opacity var(--transition);
 }
+
+.inactiveBadge:hover { opacity: 0.8; }
 
 /* Modal */
 .overlay {
@@ -167,4 +209,24 @@
   gap: 0.75rem;
   border-top: 1px solid rgba(200,149,108,0.15);
   padding-top: 1rem;
+}
+
+/* Botones editar/eliminar más chicos */
+.catActions button.btn {
+  font-size: 0.65rem !important;
+  padding: 0.2rem 0.5rem !important;
+}
+
+/* Header más compacto */
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--color-espresso);
+  margin-bottom: 0.2rem;
+}
+
+.header .btn,
+.header button {
+  font-size: 0.78rem !important;
+  padding: 0.5rem 1rem !important;
 }
