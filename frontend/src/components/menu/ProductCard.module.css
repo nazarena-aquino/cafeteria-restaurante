@@ -156,3 +156,9 @@
   color: #ffdea7;
   border-color: #2c434e;
 }
+
+/* Esto asegura que el texto de la alerta no sea demasiado grande */
+:global(.react-hot-toast) {
+  font-size: 0.9rem !important;
+  box-shadow: 0 4px 12px rgba(44, 67, 78, 0.15) !important;
+}

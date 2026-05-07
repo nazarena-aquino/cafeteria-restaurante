@@ -65,6 +65,8 @@
   border: 1px solid #e5e2dc;
   box-shadow: 0 1px 3px rgba(44, 67, 78, 0.06);
   animation: fadeIn 0.2s ease;
+  position: relative;
+  padding: 2rem 1.25rem 1.25rem;
 }
 
 .itemMain {
@@ -180,19 +182,31 @@
 }
 
 .removeBtn {
-  color: #42474b;
-  font-size: 0.8rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f6f3ed;        /* mismo lenguaje visual */
+  border: none;               /* ❌ sacá el borde */
+  color: #2c434e;
+
+  font-size: 0.95rem;
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 4px;
+
   transition: all 0.2s ease;
-  background: none;
-  border: none;
 }
 
 .removeBtn:hover {
-  color: #ba1a1a;
-  background: #FEE2E2;
+  background: #fdf6e3;   /* dorado muy suave */
+  color: #d5a341;
 }
 
 .keepBrowsing {
@@ -301,4 +315,88 @@
     position: static;
     order: -1;
   }
+}
+
+/* ── Overlay ── */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(44, 67, 78, 0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+
+  animation: fadeInOverlay 0.2s ease;
+}
+
+/* ── Modal ── */
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 380px;
+  text-align: center;
+
+  border: 1px solid #e5e2dc;
+  box-shadow: 0 12px 32px rgba(44, 67, 78, 0.15);
+
+  animation: scaleIn 0.2s ease;
+}
+
+/* ── Texto ── */
+.modal h3 {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: 1.3rem;
+  color: #2c434e;
+  margin-bottom: 0.5rem;
+}
+
+.modal p {
+  font-family: 'Work Sans', sans-serif;
+  color: #42474b;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Botones ── */
+.modalActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* ── Animaciones ── */
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal button {
+  transition: all 0.2s ease;
+}
+
+.modal button:hover {
+  transform: translateY(-1px);
 }

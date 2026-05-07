@@ -20,7 +20,21 @@ export default function ProductCard({ product }: Props) {
       price: product.price,
     })
     setAdded(true)
-    toast.success(`${product.name} agregado al carrito`)
+    
+    // Alerta personalizada con tus colores
+    toast.success(`${product.name} agregado al carrito`, {
+      style: {
+        background: '#2c434e', // Azul oscuro de tu header
+        color: '#fff',
+        fontFamily: "'Work Sans', sans-serif",
+        borderRadius: '9999px', // Redondeado como tus botones
+      },
+      iconTheme: {
+        primary: '#d5a341', // Dorado de tu banner de mesa
+        secondary: '#fff',
+      },
+    })
+    
     setTimeout(() => setAdded(false), 1500)
   }
 

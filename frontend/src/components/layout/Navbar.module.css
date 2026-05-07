@@ -107,3 +107,37 @@
     display: none;
   }
 }
+
+.orderBanner {
+  width: 100%;
+  background: #2c434e;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.6rem 1.5rem;
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: 0.875rem;
+  position: sticky;
+  top: 72px;
+  z-index: 99;
+}
+
+.orderBannerBtn {
+  background: #d5a341;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Noto Serif', Georgia, serif;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.orderBannerBtn:hover {
+  opacity: 0.85;
+}

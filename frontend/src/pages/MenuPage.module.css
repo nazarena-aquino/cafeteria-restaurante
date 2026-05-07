@@ -133,3 +133,19 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Estilo personalizado para la alerta de éxito */
+:global(.toast-success-custom) {
+  background: #2c434e !important; /* El azul oscuro de tu header */
+  color: white !important;
+  border-radius: 9999px !important;
+  font-family: 'Work Sans', sans-serif !important;
+  font-size: 0.9rem !important;
+  padding: 10px 20px !important;
+  box-shadow: 0 4px 12px rgba(44, 67, 78, 0.2) !important;
+}
+
+/* El icono de check en dorado */
+:global(.toast-icon-custom) {
+  color: #d5a341 !important; /* El dorado de tu banner */
+}

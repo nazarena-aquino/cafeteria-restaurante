@@ -8,6 +8,17 @@ import { formatPrice } from '../utils/format'
 import toast from 'react-hot-toast'
 import styles from './CheckoutPage.module.css'
 
+// Configuración base para las alertas de VORA
+const toastConfig = {
+  style: {
+    background: '#2c434e',
+    color: '#fff',
+    fontFamily: "'Work Sans', sans-serif",
+    borderRadius: '9999px',
+    fontSize: '0.9rem',
+  }
+};
+
 export default function CheckoutPage() {
   const navigate = useNavigate()
   const { items, getTotal, clearCart } = useCartStore()
@@ -16,22 +27,18 @@ export default function CheckoutPage() {
   const [step, setStep] = useState<1 | 2>(1)
   const [loading, setLoading] = useState(false)
 
-  // Order type
   const [orderType, setOrderType] = useState<OrderType>('dine_in')
   const [tableNumber, setTableNumber] = useState('')
   const [deliveryAddress, setDeliveryAddress] = useState('')
   const [deliveryNotes, setDeliveryNotes] = useState('')
 
-  // Customer info (optional)
   const [customerName, setCustomerName] = useState('')
   const [customerPhone, setCustomerPhone] = useState('')
   const [customerEmail, setCustomerEmail] = useState('')
   const [orderNotes, setOrderNotes] = useState('')
 
-  // Payment
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('mercadopago')
 
-  // Prefill table from URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const table = params.get('table')
@@ -60,11 +67,17 @@ export default function CheckoutPage() {
 
   const validateStep1 = () => {
     if (orderType === 'dine_in' && !tableNumber.trim()) {
-      toast.error('Ingresá el número de mesa')
+      toast.error('Ingresá el número de mesa', {
+        ...toastConfig,
+        iconTheme: { primary: '#ff4b4b', secondary: '#fff' }
+      })
       return false
     }
     if (orderType === 'delivery' && !deliveryAddress.trim()) {
-      toast.error('Ingresá la dirección de entrega')
+      toast.error('Ingresá la dirección de entrega', {
+        ...toastConfig,
+        iconTheme: { primary: '#ff4b4b', secondary: '#fff' }
+      })
       return false
     }
     return true
@@ -72,7 +85,7 @@ export default function CheckoutPage() {
 
   const handleSubmit = async () => {
     if (!validateStep1()) return
-
+  
     setLoading(true)
     try {
       const orderData = {
@@ -93,32 +106,42 @@ export default function CheckoutPage() {
         payment_method: paymentMethod,
         notes: orderNotes || undefined,
       }
-
+  
       const res = await orderApi.create(orderData)
       const order = res.data.data
-
+  
+      // ← NUEVO: guardar en localStorage
+      localStorage.setItem('vora_last_order', order.order_number)
+      localStorage.setItem('vora_last_order_time', new Date().toISOString())
+  
       if (paymentMethod === 'mercadopago') {
-        // Crear preferencia de pago
         const prefRes = await paymentApi.createPreference(order.id)
         const { init_point, sandbox_init_point } = prefRes.data.data
-
+  
         clearCart()
-        toast.success('Redirigiendo a MercadoPago...')
-
-        // En dev usamos sandbox, en prod usamos init_point
+        toast.success('Redirigiendo a MercadoPago...', {
+          ...toastConfig,
+          iconTheme: { primary: '#d5a341', secondary: '#fff' }
+        })
+  
         const mpUrl = import.meta.env.DEV ? sandbox_init_point : init_point
         setTimeout(() => {
           window.location.href = mpUrl
         }, 800)
       } else {
-        // Pago en efectivo
         clearCart()
-        toast.success('¡Pedido recibido! Pagá al retirar o cuando llegue.')
+        toast.success('¡Pedido recibido! Pagá al retirar o cuando llegue.', {
+          ...toastConfig,
+          iconTheme: { primary: '#d5a341', secondary: '#fff' }
+        })
         navigate(`/order-status/${order.order_number}`)
       }
     } catch (err: any) {
       const msg = err.response?.data?.error || 'Error al procesar el pedido'
-      toast.error(msg)
+      toast.error(msg, {
+        ...toastConfig,
+        iconTheme: { primary: '#ff4b4b', secondary: '#fff' }
+      })
     } finally {
       setLoading(false)
     }
@@ -130,11 +153,9 @@ export default function CheckoutPage() {
       <main className={styles.main}>
         <div className="container">
           <div className={styles.layout}>
-            {/* Form */}
             <div className={styles.form}>
               <h1 className={styles.title}>Confirmar Pedido</h1>
 
-              {/* Steps */}
               <div className={styles.steps}>
                 <div className={`${styles.step} ${step >= 1 ? styles.stepActive : ''}`}>
                   <span>1</span> Tipo de pedido
@@ -148,7 +169,6 @@ export default function CheckoutPage() {
               {step === 1 && (
                 <div className={styles.stepContent}>
                   <h2>¿Cómo querés recibir tu pedido?</h2>
-
                   <div className={styles.orderTypes}>
                     {[
                       { value: 'dine_in', icon: '🍽️', label: 'En el local', desc: 'Consumo en mesa' },
@@ -183,7 +203,7 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         className="form-input"
-                        placeholder="Ej: Mesa 5 / Mesa B"
+                        placeholder="Ej: 1"
                         value={tableNumber}
                         onChange={(e) => setTableNumber(e.target.value)}
                       />
@@ -196,8 +216,6 @@ export default function CheckoutPage() {
                         <span>ℹ️</span>
                         <p>
                           El costo de envío <strong>no está incluido</strong> en el precio.
-                          Se coordina directamente con el local según la distancia.
-                          Podés comunicarte por teléfono o WhatsApp.
                         </p>
                       </div>
                       <div className="form-group">
@@ -236,18 +254,8 @@ export default function CheckoutPage() {
 
               {step === 2 && (
                 <div className={styles.stepContent}>
-                  <button
-                    className={styles.backBtn}
-                    onClick={() => setStep(1)}
-                  >
-                    ← Volver
-                  </button>
-
+                  <button className={styles.backBtn} onClick={() => setStep(1)}>← Volver</button>
                   <h2>Tus datos (opcional)</h2>
-                  <p className={styles.optionalNote}>
-                    No necesitás crear una cuenta. Estos datos nos ayudan a contactarte.
-                  </p>
-
                   <div className={styles.fieldsRow}>
                     <div className="form-group">
                       <label className="form-label">Nombre</label>
@@ -260,83 +268,33 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label">Teléfono / WhatsApp</label>
+                      <label className="form-label">Teléfono</label>
                       <input
                         type="tel"
                         className="form-input"
-                        placeholder="+54 9 11 ..."
+                        placeholder="+54 9 370 ..."
                         value={customerPhone}
                         onChange={(e) => setCustomerPhone(e.target.value)}
                       />
                     </div>
                   </div>
 
-                  <div className="form-group">
-                    <label className="form-label">Email (para confirmación)</label>
-                    <input
-                      type="email"
-                      className="form-input"
-                      placeholder="tu@email.com"
-                      value={customerEmail}
-                      onChange={(e) => setCustomerEmail(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Notas generales del pedido</label>
-                    <textarea
-                      className="form-textarea"
-                      placeholder="Alergias, preferencias generales..."
-                      value={orderNotes}
-                      onChange={(e) => setOrderNotes(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Método de pago */}
                   <h2 style={{ marginTop: '1.5rem' }}>Método de pago</h2>
-
                   <div className={styles.paymentMethods}>
                     <label className={`${styles.payCard} ${paymentMethod === 'mercadopago' ? styles.selected : ''}`}>
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="mercadopago"
-                        checked={paymentMethod === 'mercadopago'}
-                        onChange={() => setPaymentMethod('mercadopago')}
-                        hidden
-                      />
+                      <input type="radio" name="payment" value="mercadopago" checked={paymentMethod === 'mercadopago'} onChange={() => setPaymentMethod('mercadopago')} hidden />
                       <span style={{ fontSize: '1.75rem' }}>💳</span>
-                      <div>
-                        <strong>MercadoPago</strong>
-                        <small>Tarjeta, QR, saldo digital</small>
-                      </div>
+                      <div><strong>MercadoPago</strong><small>Tarjeta, QR, saldo digital</small></div>
                       {paymentMethod === 'mercadopago' && <span className={styles.checkMark}>✓</span>}
                     </label>
 
                     <label className={`${styles.payCard} ${paymentMethod === 'cash' ? styles.selected : ''}`}>
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="cash"
-                        checked={paymentMethod === 'cash'}
-                        onChange={() => setPaymentMethod('cash')}
-                        hidden
-                      />
+                      <input type="radio" name="payment" value="cash" checked={paymentMethod === 'cash'} onChange={() => setPaymentMethod('cash')} hidden />
                       <span style={{ fontSize: '1.75rem' }}>💵</span>
-                      <div>
-                        <strong>Efectivo</strong>
-                        <small>Pagás al retirar / en el local</small>
-                      </div>
+                      <div><strong>Efectivo</strong><small>Pagás al retirar</small></div>
                       {paymentMethod === 'cash' && <span className={styles.checkMark}>✓</span>}
                     </label>
                   </div>
-
-                  {paymentMethod === 'mercadopago' && (
-                    <div className={styles.mpInfo}>
-                      <span>🔒</span>
-                      <p>Serás redirigido a MercadoPago para completar el pago de forma segura.</p>
-                    </div>
-                  )}
 
                   <button
                     className="btn btn-primary btn-lg"
@@ -344,17 +302,12 @@ export default function CheckoutPage() {
                     disabled={loading}
                     style={{ width: '100%', marginTop: '1.5rem' }}
                   >
-                    {loading
-                      ? 'Procesando...'
-                      : paymentMethod === 'mercadopago'
-                      ? '💳 Ir a pagar con MercadoPago'
-                      : '✓ Confirmar pedido en efectivo'}
+                    {loading ? 'Procesando...' : 'Confirmar pedido'}
                   </button>
                 </div>
               )}
             </div>
 
-            {/* Order Summary */}
             <div className={styles.sidebar}>
               <div className={styles.summaryBox}>
                 <h2>Tu pedido</h2>
@@ -367,17 +320,6 @@ export default function CheckoutPage() {
                     </div>
                   ))}
                 </div>
-                <div className={styles.summaryDivider} />
-                <div className={styles.summaryTotal}>
-                  <span>Total productos</span>
-                  <strong>{formatPrice(total)}</strong>
-                </div>
-                {orderType === 'delivery' && (
-                  <div className={styles.deliveryLine}>
-                    <span>Envío</span>
-                    <span>A coordinar</span>
-                  </div>
-                )}
                 <div className={styles.summaryGrandTotal}>
                   <span>Total a pagar</span>
                   <span className={styles.grandTotalAmt}>{formatPrice(total)}</span>

@@ -53,9 +53,6 @@ export const createPreference = async (req: Request, res: Response): Promise<voi
       payer: {
         name: order.customer_name || 'Cliente',
         email: order.customer_email || 'cliente@cafeteria.com',
-        phone: order.customer_phone
-          ? { number: order.customer_phone }
-          : undefined,
       },
       external_reference: order.id,
       notification_url: `${process.env.BACKEND_URL || 'http://localhost:3001'}/api/payments/webhook`,
@@ -64,13 +61,14 @@ export const createPreference = async (req: Request, res: Response): Promise<voi
         failure: `${frontendUrl}/order-status/${order.order_number}?payment=failure`,
         pending: `${frontendUrl}/order-status/${order.order_number}?payment=pending`,
       },
-      auto_return: 'approved' as const,
+      // auto_return solo en producción
+      ...(process.env.NODE_ENV === 'production' && { auto_return: 'approved' as const }),
       statement_descriptor: process.env.BUSINESS_NAME || 'Cafetería',
       metadata: {
         order_id: order.id,
         order_number: order.order_number,
       },
-    };
+    }
 
     const result = await preference.create({ body: preferenceData });
 

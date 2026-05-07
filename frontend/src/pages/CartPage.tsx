@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/layout/Navbar'
 import { useCartStore } from '../store/cartStore'
@@ -7,6 +8,8 @@ import styles from './CartPage.module.css'
 export default function CartPage() {
   const { items, removeItem, updateQuantity, updateNotes, clearCart, getTotal } = useCartStore()
   const total = getTotal()
+
+  const [showConfirm, setShowConfirm] = useState(false)
 
   if (items.length === 0) {
     return (
@@ -40,9 +43,7 @@ export default function CartPage() {
                 <h1>Tu Carrito</h1>
                 <button
                   className="btn btn-secondary btn-sm"
-                  onClick={() => {
-                    if (confirm('¿Vaciar el carrito?')) clearCart()
-                  }}
+                  onClick={() => setShowConfirm(true)}
                 >
                   🗑 Vaciar
                 </button>
@@ -52,9 +53,11 @@ export default function CartPage() {
                 <div key={item.product_id} className={styles.item}>
                   <div className={styles.itemMain}>
                     <div className={styles.itemEmoji}>☕</div>
+
                     <div className={styles.itemInfo}>
                       <h3>{item.product_name}</h3>
                       <p className={styles.unitPrice}>{formatPrice(item.price)} c/u</p>
+
                       <input
                         type="text"
                         placeholder="Notas (sin azúcar, etc.)"
@@ -63,10 +66,12 @@ export default function CartPage() {
                         className={styles.notesInput}
                       />
                     </div>
+
                     <div className={styles.itemRight}>
                       <span className={styles.itemSubtotal}>
                         {formatPrice(item.price * item.quantity)}
                       </span>
+
                       <div className={styles.qtyControl}>
                         <button
                           onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
@@ -82,14 +87,16 @@ export default function CartPage() {
                           +
                         </button>
                       </div>
-                      <button
-                        className={styles.removeBtn}
-                        onClick={() => removeItem(item.product_id)}
-                        title="Quitar"
-                      >
-                        ✕
-                      </button>
                     </div>
+
+                    {/* BOTÓN ELIMINAR (flotante) */}
+                    <button
+                      className={styles.removeBtn}
+                      onClick={() => removeItem(item.product_id)}
+                      title="Quitar"
+                    >
+                      ✕
+                    </button>
                   </div>
                 </div>
               ))}
@@ -136,6 +143,35 @@ export default function CartPage() {
           </div>
         </div>
       </main>
+
+      {/* MODAL PERSONALIZADO */}
+      {showConfirm && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>¿Vaciar el carrito?</h3>
+            <p>Se eliminarán todos los productos.</p>
+
+            <div className={styles.modalActions}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => setShowConfirm(false)}
+              >
+                Cancelar
+              </button>
+
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  clearCart()
+                  setShowConfirm(false)
+                }}
+              >
+                Vaciar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useSearchParams, Link } from 'react-router-dom'
+import { useParams, useSearchParams, Link, useNavigate } from 'react-router-dom'
 import Navbar from '../components/layout/Navbar'
 import { orderApi } from '../api'
 import { Order } from '../types'
@@ -7,21 +7,37 @@ import { formatPrice, formatDate, orderStatusLabel, orderStatusColor, orderTypeL
 import styles from './OrderStatusPage.module.css'
 
 const STATUS_STEPS = ['pending', 'confirmed', 'preparing', 'ready', 'delivered']
+const FINAL_STATUSES = ['ready', 'delivered', 'cancelled']
 
 export default function OrderStatusPage() {
   const { orderNumber } = useParams<{ orderNumber: string }>()
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const paymentResult = searchParams.get('payment')
 
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
+  const savedOrder = localStorage.getItem('vora_last_order')
+  const effectiveOrderNumber = orderNumber || savedOrder || ''
+
   const fetchOrder = async () => {
-    if (!orderNumber) return
+    if (!effectiveOrderNumber) {
+      setNotFound(true)
+      setLoading(false)
+      return
+    }
     try {
-      const res = await orderApi.track(orderNumber)
-      setOrder(res.data.data)
+      const res = await orderApi.track(effectiveOrderNumber)
+      const fetchedOrder = res.data.data
+      setOrder(fetchedOrder)
+
+      // Limpiar localStorage si el pedido llegó a estado final
+      if (FINAL_STATUSES.includes(fetchedOrder.status)) {
+        localStorage.removeItem('vora_last_order')
+        localStorage.removeItem('vora_last_order_time')
+      }
     } catch {
       setNotFound(true)
     } finally {
@@ -30,11 +46,23 @@ export default function OrderStatusPage() {
   }
 
   useEffect(() => {
+    // Si no hay orderNumber en URL pero hay en localStorage, redirigir
+    if (!orderNumber && savedOrder) {
+      navigate(`/order-status/${savedOrder}`, { replace: true })
+      return
+    }
+
+    // Si no hay nada, mostrar not found
+    if (!effectiveOrderNumber) {
+      setNotFound(true)
+      setLoading(false)
+      return
+    }
+
     fetchOrder()
-    // Poll every 15s for live updates
     const interval = setInterval(fetchOrder, 15000)
     return () => clearInterval(interval)
-  }, [orderNumber])
+  }, [effectiveOrderNumber])
 
   if (loading) {
     return (
@@ -54,8 +82,8 @@ export default function OrderStatusPage() {
         <main className={styles.main}>
           <div className={styles.center}>
             <div className={styles.icon}>😕</div>
-            <h2>Pedido no encontrado</h2>
-            <p>No encontramos el pedido <strong>{orderNumber}</strong></p>
+            <h2>No hay pedidos activos</h2>
+            <p>Cuando hagas un pedido podés seguirlo desde acá</p>
             <Link to="/menu" className="btn btn-primary">Ver Menú</Link>
           </div>
         </main>
@@ -72,7 +100,6 @@ export default function OrderStatusPage() {
       <main className={styles.main}>
         <div className="container">
 
-          {/* Payment result banner */}
           {paymentResult === 'success' && (
             <div className={styles.bannerSuccess}>
               🎉 ¡Pago realizado exitosamente! Tu pedido está confirmado.
@@ -115,7 +142,6 @@ export default function OrderStatusPage() {
                 )}
               </p>
 
-              {/* Progress bar */}
               {!isCancelled && (
                 <div className={styles.progressWrap}>
                   {STATUS_STEPS.slice(0, -1).map((status, idx) => (
@@ -142,12 +168,9 @@ export default function OrderStatusPage() {
                 </div>
               )}
 
-              {/* Payment */}
               <div className={styles.paymentRow}>
                 <span>💳 Pago:</span>
-                <span
-                  className={`badge payment-${order.payment_status}`}
-                >
+                <span className={`badge payment-${order.payment_status}`}>
                   {order.payment_method === 'mercadopago' ? 'MercadoPago' : 'Efectivo'} —{' '}
                   {order.payment_status === 'paid' ? '✓ Pagado' :
                    order.payment_status === 'pending' ? 'Pendiente' :
@@ -156,7 +179,6 @@ export default function OrderStatusPage() {
               </div>
             </div>
 
-            {/* Items & total */}
             <div className={styles.detailCard}>
               <h2>Detalle del pedido</h2>
 
@@ -193,10 +215,7 @@ export default function OrderStatusPage() {
               )}
 
               <div className={styles.actions}>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={fetchOrder}
-                >
+                <button className="btn btn-secondary btn-sm" onClick={fetchOrder}>
                   🔄 Actualizar estado
                 </button>
                 <Link to="/menu" className="btn btn-primary btn-sm">
