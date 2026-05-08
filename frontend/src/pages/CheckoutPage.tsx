@@ -85,7 +85,23 @@ export default function CheckoutPage() {
 
   const handleSubmit = async () => {
     if (!validateStep1()) return
-  
+
+    if (!customerName.trim()) {
+      toast.error('Ingresá tu nombre', {
+        ...toastConfig,
+        iconTheme: { primary: '#ff4b4b', secondary: '#fff' }
+      })
+      return
+    }
+
+    if (!customerPhone.trim()) {
+      toast.error('Ingresá tu teléfono', {
+        ...toastConfig,
+        iconTheme: { primary: '#ff4b4b', secondary: '#fff' }
+      })
+      return
+    }
+
     setLoading(true)
     try {
       const orderData = {
@@ -106,24 +122,24 @@ export default function CheckoutPage() {
         payment_method: paymentMethod,
         notes: orderNotes || undefined,
       }
-  
+
       const res = await orderApi.create(orderData)
       const order = res.data.data
-  
+
       // ← NUEVO: guardar en localStorage
       localStorage.setItem('vora_last_order', order.order_number)
       localStorage.setItem('vora_last_order_time', new Date().toISOString())
-  
+
       if (paymentMethod === 'mercadopago') {
         const prefRes = await paymentApi.createPreference(order.id)
         const { init_point, sandbox_init_point } = prefRes.data.data
-  
+
         clearCart()
         toast.success('Redirigiendo a MercadoPago...', {
           ...toastConfig,
           iconTheme: { primary: '#d5a341', secondary: '#fff' }
         })
-  
+
         const mpUrl = import.meta.env.DEV ? sandbox_init_point : init_point
         setTimeout(() => {
           window.location.href = mpUrl
@@ -168,11 +184,22 @@ export default function CheckoutPage() {
 
               {step === 1 && (
                 <div className={styles.stepContent}>
+                  <button
+                    className={styles.backBtn}
+                    onClick={() => navigate('/cart')}
+                  >
+                    ← Volver
+                  </button>
                   <h2>¿Cómo querés recibir tu pedido?</h2>
                   <div className={styles.orderTypes}>
                     {[
                       { value: 'dine_in', icon: '🍽️', label: 'En el local', desc: 'Consumo en mesa' },
-                      { value: 'takeaway', icon: '🛍️', label: 'Para llevar', desc: 'Retirás en el local' },
+                      {
+                        value: 'takeaway',
+                        icon: '🛍️',
+                        label: 'Para llevar',
+                        desc: 'Retirás en Paraguay 355'
+                      },
                       { value: 'delivery', icon: '🚚', label: 'Envío a domicilio', desc: 'El costo se coordina con el local' },
                     ].map((opt) => (
                       <label
@@ -190,7 +217,22 @@ export default function CheckoutPage() {
                         <span className={styles.orderTypeIcon}>{opt.icon}</span>
                         <div>
                           <strong>{opt.label}</strong>
-                          <small>{opt.desc}</small>
+                          {opt.value === 'takeaway' ? (
+                            <small>
+                              Retirás en{' '}
+                              <a
+                                href="https://www.google.com/maps/place/Paraguay+355,+P3600+Formosa/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.mapLink}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Paraguay 355
+                              </a>
+                            </small>
+                          ) : (
+                            <small>{opt.desc}</small>
+                          )}
                         </div>
                         {orderType === opt.value && <span className={styles.checkMark}>✓</span>}
                       </label>
@@ -255,10 +297,10 @@ export default function CheckoutPage() {
               {step === 2 && (
                 <div className={styles.stepContent}>
                   <button className={styles.backBtn} onClick={() => setStep(1)}>← Volver</button>
-                  <h2>Tus datos (opcional)</h2>
+                  <h2>Tus datos</h2>
                   <div className={styles.fieldsRow}>
                     <div className="form-group">
-                      <label className="form-label">Nombre</label>
+                      <label className="form-label">Nombre *</label>
                       <input
                         type="text"
                         className="form-input"
@@ -268,7 +310,7 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label">Teléfono</label>
+                      <label className="form-label">Teléfono *</label>
                       <input
                         type="tel"
                         className="form-input"
@@ -283,7 +325,11 @@ export default function CheckoutPage() {
                   <div className={styles.paymentMethods}>
                     <label className={`${styles.payCard} ${paymentMethod === 'mercadopago' ? styles.selected : ''}`}>
                       <input type="radio" name="payment" value="mercadopago" checked={paymentMethod === 'mercadopago'} onChange={() => setPaymentMethod('mercadopago')} hidden />
-                      <span style={{ fontSize: '1.75rem' }}>💳</span>
+                      <img
+                        src="/img/logo-mp.jpeg"
+                        alt="Mercado Pago"
+                        className={styles.paymentLogo}
+                      />
                       <div><strong>MercadoPago</strong><small>Tarjeta, QR, saldo digital</small></div>
                       {paymentMethod === 'mercadopago' && <span className={styles.checkMark}>✓</span>}
                     </label>

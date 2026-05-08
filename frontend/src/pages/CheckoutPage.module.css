@@ -344,3 +344,27 @@
     grid-template-columns: 1fr;
   }
 }
+
+.mapLink {
+  color: #9c741f;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.mapLink:hover {
+  color: #7a5918;
+  text-decoration: underline;
+}
+
+.paymentLogo {
+  width: 43px;
+  height: 43px;
+  object-fit: contain;
+
+  background: #f6f3ed;
+  padding: 8px;
+  border-radius: 12px;
+
+  flex-shrink: 0;
+}

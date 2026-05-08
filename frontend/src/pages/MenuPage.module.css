@@ -15,24 +15,36 @@
 }
 
 .header {
-  background: #2c434e;
+  background: linear-gradient(rgba(44, 67, 78, 0.7), rgba(44, 67, 78, 0.7)), 
+              url('https://clnfokibaydtkepvcoys.supabase.co/storage/v1/object/public/product-images/menu-fondo.png');
+  
+  background-size: cover;
+  
+  /* 👇 ACÁ ESTÁ LA MAGIA 👇 */
+  /* El primer valor (center) centra horizontalmente. 
+     El segundo (85%) mueve la imagen hacia arriba mostrando la parte inferior. */
+  background-position: center 82%; 
+  
+  background-repeat: no-repeat;
   color: white;
-  padding: 5rem 0 3rem;
+  padding: 7rem 0 5rem;
   margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .header h1 {
   font-family: 'Noto Serif', Georgia, serif;
-  font-size: 2.5rem;
+  font-size: 3rem;             /* Un poco más grande para resaltar */
   font-weight: 700;
   color: white;
   margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Sombra suave para despegar del fondo */
 }
 
 .header p {
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255, 255, 255, 0.9); /* Blanco más intenso para que se note sobre la imagen */
   font-family: 'Work Sans', sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .searchWrap {
@@ -148,4 +160,14 @@
 /* El icono de check en dorado */
 :global(.toast-icon-custom) {
   color: #d5a341 !important; /* El dorado de tu banner */
+}
+
+/* Ajustes específicos para celulares y tablets chicas */
+@media (max-width: 768px) {
+  .header {
+    /* El primer valor (20%) mueve la imagen de izquierda a derecha.
+       El segundo valor (85%) mantiene la altura que ya habíamos seteado. */
+    background-position: 22% 85%; 
+    padding: 6rem 0 4rem; /* Opcional: Achiqué un poco el alto para que no ocupe toda la pantalla en el celu */
+  }
 }

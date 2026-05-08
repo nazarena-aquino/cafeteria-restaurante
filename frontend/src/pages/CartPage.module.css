@@ -89,6 +89,7 @@
 
 .itemInfo {
   flex: 1;
+  max-width: 72%;
 }
 
 .itemInfo h3 {
@@ -106,7 +107,7 @@
 }
 
 .notesInput {
-  width: 100%;
+  width: 88%;
   padding: 0.45rem 0.75rem;
   border: 1.5px solid #c2c7cb;
   border-radius: 4px;
@@ -138,6 +139,7 @@
   font-size: 1.1rem;
   font-weight: 700;
   color: #2c434e;
+  margin-right: 12px;
 }
 
 .qtyControl {
@@ -210,7 +212,7 @@
 }
 
 .keepBrowsing {
-  color: #d5a341;
+  color: #b8862b;
   font-size: 0.9rem;
   text-decoration: none;
   margin-top: 0.5rem;
@@ -220,7 +222,7 @@
 }
 
 .keepBrowsing:hover {
-  color: #2c434e;
+  color: #8f6a20;
 }
 
 /* ── Summary ── */
