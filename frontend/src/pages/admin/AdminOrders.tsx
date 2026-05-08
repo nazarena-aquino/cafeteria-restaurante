@@ -67,12 +67,15 @@ export default function AdminOrders() {
     }
   }
 
-  const confirmCashPayment = async (orderId: string) => {
+  const confirmPayment = async (orderId: string) => {
     try {
       const { paymentApi } = await import('../../api')
       await paymentApi.confirmCash(orderId)
-      toast.success('Pago en efectivo confirmado')
+      toast.success('Pago confirmado')
       load()
+      if (selectedOrder?.id === orderId) {
+        setSelectedOrder((prev) => prev ? { ...prev, payment_status: 'paid' as const } : null)
+      }
     } catch {
       toast.error('Error al confirmar pago')
     }
@@ -281,35 +284,84 @@ export default function AdminOrders() {
               </div>
 
               {/* Actions */}
-              <h3 className={styles.actionsTitle}>Cambiar estado</h3>
-              <div className={styles.statusBtns}>
-                {STATUS_OPTIONS.map((s) => (
-                  <button
-                    key={s}
-                    className={`btn btn-sm ${selectedOrder.status === s ? 'btn-primary' : 'btn-secondary'}`}
-                    onClick={() => updateStatus(selectedOrder.id, s)}
-                    disabled={selectedOrder.status === s}
-                    style={{
-                      borderColor: orderStatusColor[s],
-                      color: selectedOrder.status === s ? 'white' : orderStatusColor[s],
-                      background: selectedOrder.status === s ? orderStatusColor[s] : 'transparent',
-                    }}
-                  >
-                    {orderStatusLabel[s]}
-                  </button>
-                ))}
-              </div>
+{/* Cambiar estado del pedido */}
+<h3 className={styles.actionsTitle}>Cambiar estado</h3>
+<div className={styles.statusBtns}>
+  {STATUS_OPTIONS.map((s) => (
+    <button
+      key={s}
+      className={`btn btn-sm ${selectedOrder.status === s ? 'btn-primary' : 'btn-secondary'}`}
+      onClick={() => updateStatus(selectedOrder.id, s)}
+      disabled={selectedOrder.status === s}
+      style={{
+        borderColor: orderStatusColor[s],
+        color: selectedOrder.status === s ? 'white' : orderStatusColor[s],
+        background: selectedOrder.status === s ? orderStatusColor[s] : 'transparent',
+      }}
+    >
+      {orderStatusLabel[s]}
+    </button>
+  ))}
+</div>
 
-              {/* Confirm cash */}
-              {selectedOrder.payment_method === 'cash' && selectedOrder.payment_status === 'pending' && (
-                <button
-                  className="btn btn-gold"
-                  style={{ width: '100%', marginTop: '1rem' }}
-                  onClick={() => confirmCashPayment(selectedOrder.id)}
-                >
-                  💵 Confirmar pago en efectivo
-                </button>
-              )}
+{/* Sección de pago — separada del estado */}
+<h3 className={styles.actionsTitle} style={{ marginTop: '1.25rem' }}>
+  Estado del pago
+</h3>
+
+{selectedOrder.payment_status === 'paid' ? (
+  // Ya pagado — mostrar badge sin botón
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    padding: '0.75rem 1rem',
+    background: '#D1FAE5',
+    borderRadius: '8px',
+    color: '#065F46',
+    fontWeight: 600,
+    fontSize: '0.875rem',
+  }}>
+    ✓ Pago confirmado —{' '}
+    {selectedOrder.payment_method === 'mercadopago' ? 'MercadoPago' : 'Efectivo'}
+  </div>
+) : (
+  // Pago pendiente o fallido — mostrar botón según método
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+    <div style={{
+      padding: '0.6rem 1rem',
+      background: '#FEF3C7',
+      borderRadius: '8px',
+      fontSize: '0.8rem',
+      color: '#92400E',
+    }}>
+      ⏳ Pago pendiente —{' '}
+      {selectedOrder.payment_method === 'mercadopago' ? 'MercadoPago' : 'Efectivo'}
+    </div>
+
+    {/* Botón para efectivo */}
+    {selectedOrder.payment_method === 'cash' && (
+      <button
+        className="btn btn-gold"
+        style={{ width: '100%' }}
+        onClick={() => confirmPayment(selectedOrder.id)}
+      >
+        💵 Confirmar pago en efectivo
+      </button>
+    )}
+
+    {/* Botón para MP cuando el webhook falló */}
+    {selectedOrder.payment_method === 'mercadopago' && (
+      <button
+        className="btn btn-gold"
+        style={{ width: '100%' }}
+        onClick={() => confirmPayment(selectedOrder.id)}
+      >
+        💳 Marcar como pagado manualmente
+      </button>
+    )}
+  </div>
+)}
             </div>
           )}
         </div>
