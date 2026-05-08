@@ -186,24 +186,43 @@ export const confirmCashPayment = async (req: Request, res: Response): Promise<v
   try {
     const { order_id } = req.params;
 
+    // Primero verificar que el pedido existe
+    const { data: order, error: findError } = await supabaseAdmin
+      .from('orders')
+      .select('id, payment_method, payment_status')
+      .eq('id', order_id)
+      .single();
+
+    if (findError || !order) {
+      sendError(res, 'Pedido no encontrado', 404);
+      return;
+    }
+
+    if (order.payment_status === 'paid') {
+      sendError(res, 'Este pedido ya fue marcado como pagado', 400);
+      return;
+    }
+
     const { data, error } = await supabaseAdmin
       .from('orders')
       .update({
         payment_status: 'paid',
-        status: 'confirmed',
         updated_at: new Date().toISOString(),
       })
       .eq('id', order_id)
-      .eq('payment_method', 'cash')
       .select()
       .single();
 
     if (error || !data) {
-      sendError(res, 'Pedido no encontrado o no es pago en efectivo', 400);
+      sendError(res, 'Error confirmando pago', 500);
       return;
     }
 
-    sendSuccess(res, data, 'Pago en efectivo confirmado');
+    const methodLabel = order.payment_method === 'transfer' 
+      ? 'Transferencia confirmada' 
+      : 'Pago en efectivo confirmado';
+
+    sendSuccess(res, data, methodLabel);
   } catch (err) {
     sendError(res, 'Error confirmando pago', 500);
   }

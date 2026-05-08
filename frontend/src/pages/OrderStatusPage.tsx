@@ -171,7 +171,9 @@ export default function OrderStatusPage() {
               <div className={styles.paymentRow}>
                 <span>💳 Pago:</span>
                 <span className={`badge payment-${order.payment_status}`}>
-                  {order.payment_method === 'mercadopago' ? 'MercadoPago' : 'Efectivo'} —{' '}
+                {order.payment_method === 'mercadopago' ? 'MercadoPago' 
+  : order.payment_method === 'transfer' ? '🏦 Transferencia' 
+  : '💵 Efectivo'} —{' '}
                   {order.payment_status === 'paid' ? '✓ Pagado' :
                    order.payment_status === 'pending' ? 'Pendiente' :
                    order.payment_status === 'failed' ? 'Fallido' : 'Reembolsado'}
@@ -215,9 +217,7 @@ export default function OrderStatusPage() {
               )}
 
               <div className={styles.actions}>
-                <button className="btn btn-secondary btn-sm" onClick={fetchOrder}>
-                  🔄 Actualizar estado
-                </button>
+                
                 <Link to="/menu" className="btn btn-primary btn-sm">
                   + Nuevo pedido
                 </Link>

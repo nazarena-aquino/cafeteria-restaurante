@@ -92,7 +92,7 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
         total,
         status: 'pending',
         payment_method: orderData.payment_method,
-        payment_status: orderData.payment_method === 'cash' ? 'pending' : 'pending',
+        payment_status: 'pending',
         notes: orderData.notes || null,
       })
       .select()

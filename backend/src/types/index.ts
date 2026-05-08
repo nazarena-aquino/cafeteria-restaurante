@@ -4,7 +4,7 @@
 
 export type UserRole = 'admin' | 'staff';
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'ready' | 'delivered' | 'cancelled';
-export type PaymentMethod = 'mercadopago' | 'cash';
+export type PaymentMethod = 'mercadopago' | 'cash' | 'transfer';
 export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'refunded';
 export type OrderType = 'dine_in' | 'takeaway' | 'delivery';
 export type ProductCategory = 'cafe' | 'bebidas' | 'comidas' | 'postres' | 'especiales';

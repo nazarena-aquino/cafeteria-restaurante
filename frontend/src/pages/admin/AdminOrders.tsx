@@ -248,7 +248,9 @@ export default function AdminOrders() {
                 <div className={styles.metaRow}>
                   <span>Pago</span>
                   <strong>
-                    {selectedOrder.payment_method === 'mercadopago' ? '💳 MercadoPago' : '💵 Efectivo'}
+                  {selectedOrder.payment_method === 'mercadopago' ? '💳 MercadoPago' 
+  : selectedOrder.payment_method === 'transfer' ? '🏦 Transferencia' 
+  : '💵 Efectivo'}
                     {' — '}
                     <span className={`badge payment-${selectedOrder.payment_status}`} style={{ fontSize: '0.72rem' }}>
                       {paymentStatusLabel[selectedOrder.payment_status]}
@@ -323,7 +325,9 @@ export default function AdminOrders() {
     fontSize: '0.875rem',
   }}>
     ✓ Pago confirmado —{' '}
-    {selectedOrder.payment_method === 'mercadopago' ? 'MercadoPago' : 'Efectivo'}
+    {selectedOrder.payment_method === 'mercadopago' ? 'MercadoPago' 
+  : selectedOrder.payment_method === 'transfer' ? 'Transferencia' 
+  : 'Efectivo'}
   </div>
 ) : (
   // Pago pendiente o fallido — mostrar botón según método
@@ -336,7 +340,9 @@ export default function AdminOrders() {
       color: '#92400E',
     }}>
       ⏳ Pago pendiente —{' '}
-      {selectedOrder.payment_method === 'mercadopago' ? 'MercadoPago' : 'Efectivo'}
+{selectedOrder.payment_method === 'mercadopago' ? 'MercadoPago' 
+  : selectedOrder.payment_method === 'transfer' ? 'Transferencia' 
+  : 'Efectivo'}
     </div>
 
     {/* Botón para efectivo */}
@@ -360,6 +366,17 @@ export default function AdminOrders() {
         💳 Marcar como pagado manualmente
       </button>
     )}
+
+  {/* Botón para transferencia */}
+{selectedOrder.payment_method === 'transfer' && (
+  <button
+    className="btn btn-gold"
+    style={{ width: '100%' }}
+    onClick={() => confirmPayment(selectedOrder.id)}
+  >
+    🏦 Confirmar transferencia recibida
+  </button>
+)}
   </div>
 )}
             </div>
